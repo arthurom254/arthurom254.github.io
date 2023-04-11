@@ -1,0 +1,111 @@
+*{
+    padding: 0;
+    margin:0;
+    outline: none;
+    font-family:  'Patrick Hand', cursive;
+
+}
+.nav{
+    width:80%;
+    margin: auto;
+    display:flex;
+    padding-top: 20px;
+    font-size: 30px;
+    padding-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+.nav a{
+    color:rgb(120, 120, 184);
+    text-decoration: none;
+    padding: 5px;
+    transition: .3s linear;
+}
+body{
+    background-color:rgba(230, 230, 250,0.4);
+    transition: .5s linear;
+}
+.body{
+    border-bottom:2px solid rgba(120, 120, 184,0.5);
+    border-top:2px solid rgba(120, 120, 184,0.5);
+}
+.body p{
+    font-size:2em;
+    text-align: center;
+    line-height:2;
+}
+.body h1{
+    color: rgb(120, 120, 184);
+    font-size: 3em;
+}
+.mid
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.user{
+    width:300px;
+    height:300px;
+    padding: 1%;
+    border:10px dotted rgba(120, 120, 184,0.3);
+    border-radius: 50%;
+}
+
+.myarticle{
+    margin-top: 30px;
+    line-height:2;
+    padding: 20px;
+    border:1px solid rgba(120, 120, 184,0.3);
+    border-radius: 10px;
+    border-left:6px solid rgba(120, 120, 184,0.5);
+}
+
+.link{
+    color:rgb(17, 3, 24);
+    text-decoration: none;
+    transition: .31s linear;
+}
+
+.link:hover{
+    color:rgba(120, 120, 184);
+    text-decoration: none;
+}
+
+.link:hover p{
+    color:rgb(0, 89, 255);
+}
+.end{
+    width: 70%;
+    margin: auto;
+    margin-top:30px;
+}
+
+.end .card2{
+    margin: auto;
+    margin-top:20px;
+    border-radius: 10px;
+    width:80%;
+    padding: 30px;
+    text-align: center;
+    border: 3px solid rgb(94, 89, 89);
+}
+
+.table td:nth-child(2), .table td:nth-child(2) a{
+    text-align: center;
+    color: rgb(0, 153, 255);
+}
+
+.button{
+    width:150px;
+    background-image: linear-gradient(rgb(187, 187, 214),rgb(159, 108, 163));
+    margin: 20px;
+    border-radius: 6px;
+    padding: 10px;
+}
+.footer{
+    text-align: center;
+    
+}
