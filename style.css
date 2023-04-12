@@ -10,7 +10,7 @@
     margin: auto;
     display:flex;
     padding-top: 20px;
-    font-size: 30px;
+    font-size: 25px;
     padding-bottom: 20px;
     justify-content: space-between;
     align-items: center;
@@ -31,13 +31,13 @@ body{
     border-top:2px solid rgba(120, 120, 184,0.5);
 }
 .body p{
-    font-size:2em;
+    font-size:1.5em;
     text-align: center;
     line-height:2;
 }
 .body h1{
     color: rgb(120, 120, 184);
-    font-size: 3em;
+    font-size: 2em;
 }
 .mid
 {
@@ -99,9 +99,7 @@ body{
 }
 
 .button{
-    width:150px;
     background-image: linear-gradient(rgb(187, 187, 214),rgb(159, 108, 163));
-    margin: 20px;
     border-radius: 6px;
     padding: 10px;
 }
