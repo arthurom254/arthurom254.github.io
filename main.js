@@ -1,3 +1,4 @@
+
 function atom() {
     var article=[
         {
@@ -36,4 +37,4 @@ function atom() {
     }
 }
 
-atom();
+
