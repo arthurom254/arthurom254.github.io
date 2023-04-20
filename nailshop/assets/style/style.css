@@ -10,6 +10,7 @@
 .home h1 {
     display: inline-block;
     overflow: hidden;
+    word-wrap: break-word;
     border-right: .15em solid orange;
     white-space: nowrap;
     letter-spacing: .15em;
