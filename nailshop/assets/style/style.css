@@ -1,7 +1,7 @@
 
 .home{
     height:80vh;
-    background-image: url('/assets/img/Manicure.jpg');
+    background-image: url('https://picsum.photos/800/600');
     background-size: cover;
     display: flex;
     align-items: center;
