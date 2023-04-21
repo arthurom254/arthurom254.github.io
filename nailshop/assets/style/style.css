@@ -1,12 +1,31 @@
 
 .home{
     height:80vh;
-    background-image: url('https://picsum.photos/800/600');
     background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
+    transition: .5s ease;
+    animation: atom 30s ease infinite;
+}
+@keyframes atom {
+  0%{
+    background-image: url('https://img.freepik.com/free-photo/women-with-creative-nail-art_23-2149936846.jpg');
+  }
+  25%{
+    background-image: url('https://img.freepik.com/free-photo/beautiful-afro-american-woman_144627-13084.jpg');
+  }
+  50%{
+    background-image: url('https://img.freepik.com/free-photo/women-wearing-beautiful-nail-polish_23-2149936857.jpg');
+  }
+  75%{
+    background-image: url('https://img.freepik.com/free-photo/women-with-creative-nail-art-collage_23-2149936847.jpg');
+  }
+  100%{
+    background-image: url('https://img.freepik.com/free-photo/hands-with-beautiful-colorful-nails_23-2149936854.jpg');
+  }
+  
 }
 .home h2 {
     display: inline-block;
