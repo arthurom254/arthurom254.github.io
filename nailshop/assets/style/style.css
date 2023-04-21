@@ -46,4 +46,29 @@
     from, to { border-color: transparent }
     50% { border-color: blueviolet }
   }
-  
+  h1{
+    position: relative;
+    width:100%;
+
+  }
+  h1::after{
+    content: "";
+    display: block;
+    width:30%;
+    height:4px;
+    background-color: rgb(0, 174, 255);
+    right:10px;
+    top:50%;
+    position: absolute;
+  }
+
+  h1::before{
+    content: "";
+    display: block;
+    width:30%;
+    height:4px;
+    background-color: rgb(0, 26, 255);
+    left:10px;
+    top:50%;
+    position: absolute;
+  }
