@@ -6,8 +6,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
 }
-.home h1 {
+.home h2 {
     display: inline-block;
     overflow: hidden;
     word-wrap: break-word;
