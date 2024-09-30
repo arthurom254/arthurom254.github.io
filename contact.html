@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Me</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>  
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-[#F3F4F6] text-gray-800">
+   
+  <nav class="bg-white shadow-md">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+        <div class="text-2xl font-bold text-[#003B6D]"> <a href="/index.html">Arthur Okumu</a></div>
+        <div class="md:hidden">
+            <button id="menu-toggle" class="text-[#003B6D] focus:outline-none">
+                <ion-icon name="menu" class="text-2xl"></ion-icon>
+            </button>
+        </div>
+        <div class="hidden md:flex space-x-6">
+            <a href="/index.html#hire-me" class="hover:text-[#6699CC]">Hire Me</a>
+            <a href="/index.html#about-me" class="hover:text-[#6699CC]">About Me</a>
+            <a href="/index.html#my-projects" class="hover:text-[#6699CC]">My Projects</a>
+            <a href="/blog/index.html" class="hover:text-[#6699CC]">Blogs</a>
+            <a href="/contact.html" class="hover:text-[#6699CC]">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<div id="nav-menu" class="nav-menu md:hidden bg-white shadow-md">
+    <div class="flex flex-col items-center py-4">
+        <a href="/index.html#hire-me" class="hover:text-[#6699CC] py-2">Hire Me</a>
+        <a href="/index.html#about-me" class="hover:text-[#6699CC] py-2">About Me</a>
+        <a href="/index.html#my-projects" class="hover:text-[#6699CC] py-2">My Projects</a>
+        <a href="/blog/index.html" class="hover:text-[#6699CC] py-2">Blogs</a>
+        <a href="/contact.html" class="hover:text-[#6699CC] py-2">Contact</a>
+    </div>
+</div>
+  <section class="container mx-auto py-12 px-6 bg-gray-100 text-[#003B6D]">
+    <h2 class="text-3xl font-semibold mb-6 text-center">Contact Me</h2>
+    <p class="text-lg mb-8 text-center">
+        I'd love to hear from you! Please fill out the form below, and I'll get back to you as soon as possible.
+    </p>
+
+    <form action="https://formspree.io/f/mqkowqnr" method="POST" class="bg-white p-8 rounded-lg shadow-lg max-w-xl mx-auto space-y-6">
+        <div>
+            <label for="name" class="block text-sm font-medium mb-1">Your Name</label>
+            <input type="text" id="name" name="name" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6699CC]" aria-label="Your name">
+        </div>
+
+        <div>
+            <label for="email" class="block text-sm font-medium mb-1">Email Address</label>
+            <input type="email" id="email" name="email" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6699CC]" aria-label="Your email address">
+        </div>
+
+        <div>
+            <label for="message" class="block text-sm font-medium mb-1">Message</label>
+            <textarea id="message" name="message" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6699CC]" rows="4" aria-label="Your message"></textarea>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="bg-[#003B6D] text-white px-6 py-3 rounded-full hover:bg-[#6699CC] transition-all focus:outline-none focus:ring-2 focus:ring-[#6699CC]" aria-label="Submit your message">
+                Send Message
+            </button>
+        </div>
+    </form>
+
+    <div class="mt-12 text-center">
+        <h3 class="text-2xl font-semibold mb-4">Other Ways to Reach Me</h3>
+        <ul class="flex justify-center space-x-8">
+            <li>
+                <a href="mailto:okumuarthur496@gmail.com" class="flex items-center text-[#003B6D] hover:text-[#6699CC] transition-colors">
+                    <ion-icon name="mail" class="text-2xl mr-2"></ion-icon>
+                    Email
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/arthurom254" target="_blank" rel="noopener noreferrer" class="flex items-center text-[#003B6D] hover:text-[#6699CC] transition-colors">
+                    <ion-icon name="logo-github" class="text-2xl mr-2"></ion-icon>
+                    GitHub
+                </a>
+            </li>
+            <li>
+              <a href="https://t.me/arthurom254" target="_blank" rel="noopener noreferrer" class="flex items-center text-[#003B6D] hover:text-[#6699CC] transition-colors">
+                <ion-icon name="call-sharp" class="text-2xl mr-2"></ion-icon>
+                Telegram
+            </a>            
+            </li>
+        </ul>
+    </div>
+</section>
+
+  
+<footer class="bg-gray-800 text-white py-4">
+  <div class="max-w-6xl mx-auto flex justify-center">
+      <ul class="flex space-x-6">
+          <li>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#003B6D] transition-colors">
+                  <ion-icon name="logo-facebook" class="text-2xl"></ion-icon>
+              </a>
+          </li>
+          <li>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#003B6D] transition-colors">
+                  <ion-icon name="logo-twitter" class="text-2xl"></ion-icon>
+              </a>
+          </li>
+          <li>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#003B6D] transition-colors">
+                  <ion-icon name="logo-instagram" class="text-2xl"></ion-icon>
+              </a>
+          </li>
+      </ul>
+  </div>
+  <div class="text-center mt-4">
+      <p class="text-sm">&copy; 2024 atomic-anaid. All rights reserved.</p>
+  </div>
+</footer>
+
+  <script>
+    AOS.init();
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>

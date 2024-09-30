@@ -1,0 +1,86 @@
+.nav-menu {
+    transition: max-height 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+}
+.nav-menu.show {
+    max-height: 300px;
+}
+
+.bounce {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Styles for the article content */
+.article {
+    font-family: 'Arial', sans-serif; /* Use a clean, readable font */
+    line-height: 1.6; /* Improve readability with line height */
+    padding: 20px; /* Add padding around the article content */
+    background-color: #ffffff; /* White background for the article */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Headings inside the article */
+.article h2 {
+    font-size: 2rem; /* Size for main headings */
+    color: #003B6D; /* Dark blue color for main headings */
+    margin-bottom: 15px; /* Space below the heading */
+}
+
+.article h3 {
+    font-size: 1.5rem; /* Size for subheadings */
+    color: #003B6D; /* Dark blue color for subheadings */
+    margin: 10px 0; /* Margin above and below the subheading */
+}
+
+.article h4 {
+    font-size: 1.25rem; /* Size for smaller subheadings */
+    color: #003B6D; /* Dark blue color for smaller subheadings */
+    margin: 8px 0; /* Margin above and below the heading */
+}
+
+/* Paragraphs inside the article */
+.article p {
+    margin: 10px 0; /* Margin above and below paragraphs */
+    color: #555555; /* Dark gray color for text */
+}
+
+/* Blockquotes inside the article */
+.article blockquote {
+    border-left: 4px solid #003B6D; /* Dark blue left border */
+    padding-left: 15px; /* Padding inside the blockquote */
+    color: #555555; /* Dark gray color for quotes */
+    margin: 20px 0; /* Margin above and below the blockquote */
+    font-style: italic; /* Italic style for emphasis */
+}
+
+/* Code blocks inside the article */
+.article pre {
+    background-color: #f7f7f7; /* Light gray background for code blocks */
+    padding: 15px; /* Padding inside the code block */
+    border-radius: 4px; /* Slightly rounded corners */
+    overflow-x: auto; /* Allow horizontal scrolling for long lines */
+    font-family: 'Courier New', monospace; /* Monospace font for code */
+}
+
+/* Inline code inside the article */
+.article code {
+    background-color: #eaeaea; /* Light gray background for inline code */
+    padding: 2px 4px; /* Padding for inline code */
+    border-radius: 4px; /* Rounded corners */
+    font-family: 'Courier New', monospace; /* Monospace font for inline code */
+    color: #d63384; /* Pink color for inline code */
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arthur Okumu - [arthurom254] portfolio wesite</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-100 text-[#003B6D]">
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <div class="text-2xl font-bold text-[#003B6D]"><a href="/index.html">Arthur Okumu</a></div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-[#003B6D] focus:outline-none">
+                    <ion-icon name="menu" class="text-2xl"></ion-icon>
+                </button>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="/#hire-me" class="hover:text-[#6699CC]">Hire Me</a>
+                <a href="/#about-me" class="hover:text-[#6699CC]">About Me</a>
+                <a href="/#my-projects" class="hover:text-[#6699CC]">My Projects</a>
+                <a href="/blog/index.html" class="hover:text-[#6699CC]">Blogs</a>
+                <a href="/contact.html" class="hover:text-[#6699CC]">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="nav-menu" class="nav-menu md:hidden bg-white shadow-md">
+        <div class="flex flex-col items-center py-4">
+            <a href="/#hire-me" class="hover:text-[#6699CC] py-2">Hire Me</a>
+            <a href="/#about-me" class="hover:text-[#6699CC] py-2">About Me</a>
+            <a href="/#my-projects" class="hover:text-[#6699CC] py-2">My Projects</a>
+            <a href="/blog/index.html" class="hover:text-[#6699CC] py-2">Blogs</a>
+            <a href="/contact.html" class="hover:text-[#6699CC] py-2">Contact</a>
+        </div>
+    </div>
+
+    <section class="container mx-auto py-12">
+        <h2 class="text-3xl font-semibold text-center mb-8">All Blogs</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
+                <img src="https://trendy.furnitureelegancengara.com/media/blog/2024-08-18/image_2.jpg" alt="Article 1" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Optimizing Your Website By Extracting Unused CSS from HTML Files</h3>
+                    <!-- <p class="text-gray-600 mb-4">...</p> -->
+                    <a href="easy-way-to-optimizing-your-website-by-extracting-unused-css-from-html-files" class="bg-[#003B6D] text-white px-4 py-2 rounded-full hover:bg-[#6699CC] transition-colors">Read More</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center mt-8">
+            <a href="#" class="bg-[#003B6D] text-white px-4 py-2 rounded-full hover:bg-[#6699CC] transition-colors">Previous</a>
+            <a href="#" class="bg-[#003B6D] text-white px-4 py-2 rounded-full hover:bg-[#6699CC] transition-colors">Next</a>
+        </div>
+    </section>
+
+<footer class="bg-gray-800 text-white py-4">
+    <div class="max-w-6xl mx-auto flex justify-center">
+        <ul class="flex space-x-6">
+            <li>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#003B6D] transition-colors">
+                    <ion-icon name="logo-facebook" class="text-2xl"></ion-icon>
+                </a>
+            </li>
+            <li>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#003B6D] transition-colors">
+                    <ion-icon name="logo-twitter" class="text-2xl"></ion-icon>
+                </a>
+            </li>
+            <li>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#003B6D] transition-colors">
+                    <ion-icon name="logo-instagram" class="text-2xl"></ion-icon>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="text-center mt-4">
+        <p class="text-sm">&copy; 2024 atomic-anaid. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  AOS.init();
+  initYr()
+</script>
+</body>
+</html>

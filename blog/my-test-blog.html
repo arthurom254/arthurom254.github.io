@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arthur Okumu - [arthurom254] portfolio wesite</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body class="bg-gray-100 text-[#003B6D]">
+    <nav class="bg-white shadow-md">
+      <div
+        class="container mx-auto flex justify-between items-center py-4 px-6"
+      >
+        <div class="text-2xl font-bold text-[#003B6D]">
+          <a href="/index.html">Arthur Okumu</a>
+        </div>
+        <div class="md:hidden">
+          <button id="menu-toggle" class="text-[#003B6D] focus:outline-none">
+            <ion-icon name="menu" class="text-2xl"></ion-icon>
+          </button>
+        </div>
+        <div class="hidden md:flex space-x-6">
+          <a href="/#hire-me" class="hover:text-[#6699CC]">Hire Me</a>
+          <a href="/#about-me" class="hover:text-[#6699CC]">About Me</a>
+          <a href="/#my-projects" class="hover:text-[#6699CC]">My Projects</a>
+          <a href="/blog/index.html" class="hover:text-[#6699CC]">Blogs</a>
+          <a href="/contact.html" class="hover:text-[#6699CC]">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="nav-menu" class="nav-menu md:hidden bg-white shadow-md">
+      <div class="flex flex-col items-center py-4">
+        <a href="/#hire-me" class="hover:text-[#6699CC] py-2">Hire Me</a>
+        <a href="/#about-me" class="hover:text-[#6699CC] py-2">About Me</a>
+        <a href="/#my-projects" class="hover:text-[#6699CC] py-2"
+          >My Projects</a
+        >
+        <a href="/blog/index.html" class="hover:text-[#6699CC] py-2">Blogs</a>
+        <a href="/contact.html" class="hover:text-[#6699CC] py-2">Contact</a>
+      </div>
+    </div>
+
+    <article class="article">
+      <div class="">
+        <div class="">
+          <div class="">
+            <h1>
+              Optimizing Your Website By Extracting Unused CSS from HTML Files
+            </h1>
+
+            <p>
+              The optimization of efficient code is one of the most important
+              roles in a web developer's life. Your website's CSS files can
+              quickly bloat up with unused styles over time, especially if you
+              are using a very popular framework like Bootstrap or working with
+              pre-built templates. These unused styles will ultimately slow down
+              your website and make your code difficult to handle. In this post,
+              we'll learn how to extract and remove unused CSS from your HTML
+              files using tools such as <strong>PurgeCSS</strong> and
+              <strong>UnCSS</strong>. We will further look at explicit
+              scenarios, for example, when working with CSS frameworks and
+              ready-built templates, and talk about some online tools at your
+              disposal which let you simply paste your HTML and CSS to quickly
+              optimize them.
+            </p>
+
+            <h2 class="section-heading">The Problem with CSS Frameworks</h2>
+
+            <p>
+              CSS frameworks like <strong>Bootstrap</strong>,
+              <strong>Tailwind</strong>, <strong>Foundation</strong>, and many
+              more are really good ways of speeding up your development process
+              by quickly giving you responsive, rich-featured websites. All of
+              these frameworks, however, come along with a large volume of CSS
+              that you might never use. Here's an example:
+            </p>
+
+            <ul>
+              <li>
+                <p>
+                  <a
+                    href="https://getbootstrap.com/"
+                    class="external-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><strong>Bootstrap</strong></a
+                  >: A full-fledged framework with styles for buttons, forms,
+                  modals, tooltips, and lots of other elements. If your project
+                  uses only a few of these components, though, the rest of the
+                  CSS goes to waste, ballooning your file size.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <a
+                    href="https://tailwindcss.com/"
+                    class="external-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><strong>Tailwind CSS</strong></a
+                  >: Although Tailwind championed a utility-first methodology,
+                  encouraging one to use only those classes that one needs, a
+                  typical Tailwind installation still comprises thousands of
+                  utility classes by default.
+                </p>
+              </li>
+            </ul>
+
+            <h3>Why This is a Problem</h3>
+
+            <ol>
+              <li>
+                <strong>Performance Impact</strong>: Every style not in use adds
+                to the size of your CSS files, meaning increased download time
+                and, correspondingly, slower page loads.
+              </li>
+              <li>
+                <strong>Complexity</strong>: It's difficult to maintain a huge
+                CSS file with lots of unused styles as your project grows.
+              </li>
+              <li>
+                <strong>Overhead</strong>: More CSS files give the browser more
+                work to do when rendering your page.
+              </li>
+            </ol>
+
+            <h2 class="section-heading">Removing Unused CSS from Frameworks</h2>
+
+            <p>
+              One may do this using tools like <strong>PurgeCSS</strong> and
+              <strong>UnCSS</strong>. Both these tools extract only the used CSS
+              in your project to solve this issue.
+            </p>
+
+            <h3>
+              <a
+                href="https://v1.purgecss.com/"
+                class="external-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Using PurgeCSS with Frameworks</a
+              >
+            </h3>
+
+            <p>
+              PurgeCSS works really well for projects which use a CSS framework.
+              You can specify which HTML and JavaScript files should be scanned
+              to make sure that only the styles really used in your project are
+              kept.
+            </p>
+
+            <p>
+              <strong>Example</strong>: Setting up PurgeCSS in your build
+              process if you're using Bootstrap:
+            </p>
+
+            <pre><code data-highlighted="yes" class="hljs language-javascript"><span class="hljs-keyword">var</span> <span class="hljs-title class_">Purgecss</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'purgecss'</span>)
+    <span class="hljs-keyword">var</span> purgecss = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Purgecss</span>({
+      <span class="hljs-attr">content</span>: [<span class="hljs-string">'**/*.html'</span>],
+      <span class="hljs-attr">css</span>: [<span class="hljs-string">'**/*.css'</span>]
+    })
+    <span class="hljs-keyword">var</span> purgecssResult = purgecss.<span class="hljs-title function_">purge</span>()
+    </code></pre>
+
+            <p>
+              This configuration will look through your HTML and JavaScript
+              files for any Bootstrap classes being used, and remove the rest.
+            </p>
+
+            <p>
+              <strong>Tailwind CSS Example</strong>: Tailwind CSS has native
+              support for PurgeCSS, which provides even easier removal of styles
+              that are not used. Configuration is done in your
+              <code>tailwind.config.js</code> file as follows:
+            </p>
+
+            <pre><code data-highlighted="yes" class="hljs language-java"><span class="hljs-keyword">module</span>.<span class="hljs-keyword">exports</span> = {
+      purge: [<span class="hljs-string">'./src/**/*.html'</span>, <span class="hljs-string">'./src/**/*.js'</span>],
+      <span class="hljs-comment">// other config options</span>
+    };
+    </code></pre>
+
+            <h3>
+              <a
+                href="https://www.npmjs.com/package/uncss"
+                class="external-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Using UnCSS and Frameworks</a
+              >
+            </h3>
+
+            <p>
+              With UnCSS, you can remove unused CSS from frameworks. This
+              solution, though generally easier to set up for small projects, is
+              quite powerful for static site setups using Bootstrap.
+            </p>
+
+            <h2 class="section-heading">Dealing with Pre-Built Templates</h2>
+
+            <p>
+              Another common scenario is you start with a pre-built HTML/CSS
+              template, and then you further modify it to your taste. You might
+              delete some HTML elements or even sections that you don't need,
+              but the related CSS stays there, bloating your stylesheet for no
+              reason.
+            </p>
+
+            <h3>The Challenge</h3>
+
+            <ul>
+              <li>
+                <strong>Template Complexity</strong>: Most pre-built templates
+                come with solid CSS that covers a wide range of components and
+                complex layouts. As soon as you begin the process of removing
+                HTML elements, related CSS is left over, unused and possibly
+                perplexing.
+              </li>
+              <li>
+                <strong>Manual Cleanup</strong>: It's time-consuming and full of
+                errors to remove by hand unused CSS from a template in a big
+                project.
+              </li>
+            </ul>
+
+            <p>
+              <strong>Automated Solutions</strong>: In such scenarios, tools
+              such as PurgeCSS and UnCSS really show their worth. They will
+              delete CSS that is no longer in use once you have made changes to
+              your template.
+            </p>
+
+            <h3>How to Optimize a Customized Template</h3>
+
+            <ol>
+              <li>
+                <strong>Parse the HTML Files</strong>: Run the tools, PurgeCSS
+                or UnCSS on your HTML files after modification.
+              </li>
+              <li>
+                <strong>Remove Unused CSS</strong>: Both of these tools
+                auto-delete any CSS rules no longer applying to the new
+                structure of the HTML.
+              </li>
+              <li>
+                <strong>Test and Refine</strong>: Always test your website
+                thoroughly after running these tools to make sure that no
+                essential styles were removed by mistake.
+              </li>
+            </ol>
+
+            <p>
+              This approach ensures that the CSS used by the remaining HTML
+              elements is retained.
+            </p>
+
+            <h2 class="section-heading">
+              Extracting Unused CSS Using Online Tools
+            </h2>
+
+            <p>
+              On top of the above mentioned CLI tools, there are quite a lot of
+              online tools to which you can just paste your HTML and CSS to
+              quickly <code>purge unused styles</code>. Particularly, these
+              tools become handy for small projects, quick tests, or where you
+              want a fast, easy way to clean up your CSS without setting up a
+              build process.
+            </p>
+
+            <h3>Here are a few popular online tools</h3>
+
+            <ol>
+              <li>
+                <a
+                  href="https://uncss-online.com"
+                  class="external-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ><strong>UnCSS Online</strong></a
+                >
+              </li>
+              <li>
+                <p>
+                  UnCSS Online is a no-brain, easy tool. You paste your HTML and
+                  CSS, and it returns cleaned-up CSS. Perfect for small, quick
+                  tasks and smaller projects.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <a
+                    href="https://purifycss.online/"
+                    class="external-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><strong>PurifyCSS Online</strong></a
+                  >
+                </p>
+              </li>
+              <li>
+                <p>
+                  The PurifyCSS Online tool allows you to enter the ulr to the
+                  website or simply paste your HTML and CSS directly into a web
+                  interface. This way, you have a preview of what CSS it is
+                  going to purge without having to wire it up directly in your
+                  project. This tool is awesome, especially if you're playing
+                  with a few different configurations and testing before
+                  integrating it into your project.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <a
+                    href="https://cssnano.github.io/cssnano/playground/"
+                    class="external-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><strong>CSSNano</strong></a
+                  >
+                </p>
+              </li>
+              <li>
+                Even though it is a CSS minifier, it goes further to decrease
+                the file size by eliminating excessive CSS. You can paste your
+                CSS into their online interface to quickly optimize it.
+              </li>
+            </ol>
+
+            <h3>How to Use These Tools</h3>
+
+            <ol>
+              <li>
+                <strong>Paste Your HTML and CSS</strong>: Paste your HTML and
+                CSS into text boxes on that tool's site.
+              </li>
+              <li>
+                <strong>Run the Tool</strong>: At the click of a button, the
+                tool goes through your HTML and CSS and purges all the unused
+                styles.
+              </li>
+              <li>
+                <strong>Download the Optimized CSS</strong>: At the completion
+                of the process, a download button appears, clicking on which you
+                can download a cleaned CSS file to replace your old, heavy
+                stylesheet.
+              </li>
+            </ol>
+
+            <h3>Pros of Online Tools</h3>
+
+            <ul>
+              <li>
+                <strong>Convenience</strong>: Nothing to install or configure.
+                Just paste and go.
+              </li>
+              <li>
+                <strong>Fast Feedback</strong>: Ideal for trivial changes or if
+                you are short of time.
+              </li>
+              <li>
+                <strong>No Configuration</strong>: Ideal for non-developers, or
+                those who don't want to set up build tools.
+              </li>
+            </ul>
+
+            <h3>Limitations</h3>
+
+            <ul>
+              <li>
+                <strong>Not Good for Large Projects</strong>: These tools are
+                not so great on large complex projects. In that case, build
+                tools like PurgeCSS will be a better fit.
+              </li>
+              <li>
+                <strong>Limited Customization</strong>: You may not get to
+                control the process as one would in a locally installed tool.
+              </li>
+            </ul>
+
+            <h2 class="section-heading">
+              Best Practices for Using CSS Frameworks and Templates
+            </h2>
+
+            <p>
+              For your CSS to stay optimized while working with these, the
+              following will be of great help:
+            </p>
+
+            <ol>
+              <li>
+                <strong>Modular Frameworks</strong>: This means picking
+                frameworks, if possible, that allow you to import only the
+                components that you really want (for instance, Bootstrap's
+                modular CSS files).
+              </li>
+              <li>
+                <strong>Integrate PurgeCSS or UnCSS Early</strong>: Include
+                these tools in the beginning of your build process. This will
+                help keep the CSS optimized since your project will evolve.
+              </li>
+              <li>
+                <strong>Watch Out and Clean Up</strong>: Keep an eye on your
+                CSS—especially after big changes to your HTML—for unused styles
+                and remove them.
+              </li>
+              <li>
+                <strong>Be careful with Dynamic Content</strong>: Be careful
+                while working with these tools on dynamic content. Make sure
+                styles for elements that may or may not exist within the HTML at
+                any given point—think modals, dropdowns—do not accidentally get
+                scoped and removed.
+              </li>
+            </ol>
+
+            <h2 class="section-heading">Conclusion</h2>
+
+            <p>
+              Extracting unused CSS is a crucial step toward optimizing your
+              website's performance and maintainability, whether you're using a
+              popular CSS framework such as Bootstrap or working with a
+              pre-built template. That is where tools like
+              <strong>PurgeCSS</strong> and <strong>UnCSS</strong> come in handy
+              with potent solutions for such a challenge, enabling you to
+              maintain clean and efficient CSS. Online tools provide an easy and
+              fast way to strip unused CSS, thus availing optimization even to
+              small project developers.
+            </p>
+
+            <p>
+              Build those tools into your workflow and, by following best
+              practices, you can ensure your site is not only beautiful but
+              performs great too. So go ahead and clean up your CSS today, your
+              users and your future self will thank you!
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <footer class="bg-gray-800 text-white py-4">
+      <div class="max-w-6xl mx-auto flex justify-center">
+        <ul class="flex space-x-6">
+          <li>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-[#003B6D] transition-colors"
+            >
+              <ion-icon name="logo-facebook" class="text-2xl"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-[#003B6D] transition-colors"
+            >
+              <ion-icon name="logo-twitter" class="text-2xl"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-[#003B6D] transition-colors"
+            >
+              <ion-icon name="logo-instagram" class="text-2xl"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="text-center mt-4">
+        <p class="text-sm">&copy; 2024 atomic-anaid. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+      AOS.init();
+      initYr();
+    </script>
+  </body>
+</html>
