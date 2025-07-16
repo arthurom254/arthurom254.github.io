@@ -1,357 +1,831 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arthur Okumu - [arthurom254] portfolio wesite</title>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arthur Okumu - [arthurom254] Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #10B981;
+            --secondary-color: #065F46;
+            --accent-color: #34D399;
+            --background: #0F172A;
+            --surface: #1E293B;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .glow {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .terminal-prompt::before {
+            content: '$ ';
+            color: #10B981;
+        }
+
+        .typing-animation {
+            overflow: hidden;
+            border-right: .15em solid #10B981;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: #10B981;
+            }
+        }
+
+        .code-block {
+            background: linear-gradient(45deg, #1E293B, #0F172A);
+            border: 1px solid #334155;
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .nav-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .nav-menu.active {
+            max-height: 500px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            opacity: 0.9;
+        }
+
+        .project-card:hover {
+            opacity: 1;
+        }
+    </style>
+
+    <style>
+        .code-block {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+        }
+
+        .glow {
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+
+        .project-card {
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(59, 130, 246, 0.8));
+        }
+    </style>
+
 </head>
-<body class="bg-gray-100 text-[#003B6D]">
-   <nav class="bg-gray-900 shadow-md">
-    <div class="container mx-auto flex justify-between items-center py-4 px-6">
-        <div class="text-2xl font-bold text-white"><a href="/index.html">Arthur Okumu</a></div>
-        <div class="md:hidden">
-            <button id="menu-toggle" class="text-white focus:outline-none">
-                <ion-icon name="menu" class="text-2xl"></ion-icon>
-            </button>
+
+<body class="bg-slate-900 text-slate-100">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-slate-900 bg-opacity-95 backdrop-blur-sm z-50 border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-mono text-xl font-bold text-green-400">
+                    Arthur Okumu
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-white focus:outline-none">
+                        <ion-icon name="menu" class="text-2xl"></ion-icon>
+                    </button>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-slate-300 hover:text-green-400 transition-colors font-mono">home</a>
+                    <a href="#about" class="text-slate-300 hover:text-green-400 transition-colors font-mono">about</a>
+                    <a href="#skills" class="text-slate-300 hover:text-green-400 transition-colors font-mono">skills</a>
+                    <a href="#projects"
+                        class="text-slate-300 hover:text-green-400 transition-colors font-mono">projects</a>
+                    <a href="#contact"
+                        class="text-slate-300 hover:text-green-400 transition-colors font-mono">contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                </div>
+            </div>
         </div>
-        <div class="hidden md:flex space-x-6">
-            <a href="/#hire-me" class="hover:text-indigo-400 text-gray-300">Hire Me</a>
-            <a href="/#about-me" class="hover:text-indigo-400 text-gray-300">About Me</a>
-            <a href="/#my-projects" class="hover:text-indigo-400 text-gray-300">My Projects</a>            
-            <a href="/blog/index.html" class="hover:text-indigo-400 text-gray-300">Blogs</a>
-            <a href="/contact.html" class="hover:text-indigo-400 text-gray-300">Contact</a>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="nav-menu" class="nav-menu md:hidden bg-slate-800 shadow-md fixed top-20 w-full z-40">
+        <div class="flex flex-col items-center py-4">
+            <a href="#home" class="text-slate-300 hover:text-green-400 transition-colors font-mono py-2">home</a>
+            <a href="#about" class="text-slate-300 hover:text-green-400 transition-colors font-mono py-2">about</a>
+            <a href="#skills" class="text-slate-300 hover:text-green-400 transition-colors font-mono py-2">skills</a>
+            <a href="#projects"
+                class="text-slate-300 hover:text-green-400 transition-colors font-mono py-2">projects</a>
+            <a href="#contact" class="text-slate-300 hover:text-green-400 transition-colors font-mono py-2">contact</a>
         </div>
     </div>
-</nav>
 
-<div id="nav-menu" class="nav-menu md:hidden bg-gray-800 shadow-md">
-    <div class="flex flex-col items-center py-4">
-        <a href="/#hire-me" class="hover:text-indigo-400 text-gray-300 py-2">Hire Me</a>
-        <a href="/#about-me" class="hover:text-indigo-400 text-gray-300 py-2">About Me</a>
-        <a href="/#my-projects" class="hover:text-indigo-400 text-gray-300 py-2">My Projects</a>            
-        <a href="/blog/index.html" class="hover:text-indigo-400 text-gray-300 py-2">Blogs</a>
-        <a href="/contact.html" class="hover:text-indigo-400 text-gray-300 py-2">Contact</a>
-    </div>
-</div>
+    <!-- Hero Section -->
+    <section id="home"
+        class="min-h-screen pt-20 flex items-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <div class="max-w-6xl mx-auto px-6 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="font-mono text-green-400 mb-4">
+                        <span class="terminal-prompt">printf("Hello World");</span>
+                    </div>
+                    <h1 class="text-4xl lg:text-6xl font-bold mb-6">
+                        <span class="text-slate-100">Arthur</span>
+                        <span class="text-green-400">Okumu</span>
+                    </h1>
+                    <div class="font-mono text-xl text-slate-300 mb-8 typing-animation">
+                        Programmer & Technology Enthusiast
+                    </div>
+                    <p class="text-lg text-slate-400 mb-8 leading-relaxed">
+                        Passionate about exploring new technologies and building innovative solutions.
+                        Based in Nairobi, Kenya, specializing in web development, mobile apps, and security.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#contact"
+                            class="px-8 py-3 bg-green-500 text-slate-900 font-semibold rounded glow hover:bg-green-400 transition-colors">
+                            Contact Me
+                        </a>
+                        <a href="#contact"
+                            class="px-8 py-3 border border-green-500 text-green-400 font-semibold rounded hover:bg-green-500 hover:text-slate-900 transition-colors">
+                            My Resume
+                        </a>
+                    </div>
+                </div>
 
-
-<section class="bg-cover bg-center h-[500px] relative " style="background-image: url('img/b.png');">
-  <div class=" flex gap-3 items-center justify-center flex-col text-center text-white p-8 bg-black bg-opacity-50 rounded inset-0 absolute ">
-    <h1 data-aos="flip-left" class="text-4xl md:text-6xl font-bold mb-4">printf("Hello World");</h1>
-    <p data-aos="fade-up" class="font-mono text-lg md:text-2xl mb-6">
-        My Name is Arthur Okumu,
-    </p>
-    <div class="flex gap-5">
-        <a data-aos="fade-up" href="contact.html" class="bg-[#6699CC] px-6 py-3 rounded-full hover:bg-white hover:text-[#003B6D] transition-all">Contact Me</a>
-        <a data-aos="fade-up" href="contact.html" class="bg-[#003B6D] px-6 py-3 rounded-full hover:bg-white hover:text-[#003B6D] transition-all">My Resume</a>
-    </div>
-  </div>
-  
-</section>
-<section class="py-12 bg-gray-100" id="about-me">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-6" data-aos="fade-up">About Me</h2>
-    <section class="bg-gray-950 py-12">
-    <div class="max-w-4xl mx-auto px-6">
-        <div class="p-8 bg-gray-900 rounded-lg shadow-2xl border border-gray-800">
-            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6" data-aos="fade-up" data-aos-delay="100">
-                Hello! I'm Arthur Okumu
-            </h1>
-            <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-6" data-aos="fade-up" data-aos-delay="200">
-                I'm an enthusiastic programmer and a passionate lover of technology, currently based in Nairobi, Kenya. 
-                I thrive on exploring new technologies and building innovative solutions that simplify lives.
-            </p>
-            <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-6" data-aos="fade-up" data-aos-delay="300">
-                With a solid foundation in various programming languages and frameworks, I specialize in:
-            </p>
-            <ul class="list-disc list-inside space-y-2 text-lg md:text-xl text-gray-300 mb-6" data-aos="fade-up" data-aos-delay="400">
-                <li>Web Development</li>
-                <li>Mobile Applications</li>
-                <li>Web Penetration Testing</li>
-                <li>Network Programming</li>
-                <li>Networking (Switches, Routers, Firewalls)</li>
-                <li>Web Hosting Solutions</li>
-                <li>Blockchain and AI Innovations</li>
-            </ul>
-            <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-6" data-aos="fade-up" data-aos-delay="500">
-                I love to code during my free time. When I'm not programming, you might find me cycling or skating, 
-                embracing the joy of movement. Creativity and curiosity are at the heart of my innovation, and I 
-                strive to embody these values in every project I undertake.
-            </p>
-            <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-6" data-aos="fade-up" data-aos-delay="600">
-                I also share my thoughts and projects on my blog. Feel free to check it out: 
-                <a href="/blog/" class="text-indigo-500 hover:underline font-medium" target="_blank" rel="noopener noreferrer">My Blog</a>.
-            </p>
-            <p class="text-lg md:text-xl text-gray-300 leading-relaxed" data-aos="fade-up" data-aos-delay="700">
-                Reach out to me on 
-                <a href="https://github.com/arthurom254" class="text-blue-400 hover:underline font-medium">GitHub</a> 
-                or via my 
-                <a href="contact.html" class="text-blue-400 hover:underline font-medium">Contact Page</a>. 
-                Let’s collaborate or chat about tech!
-            </p>
-        </div>
-    </div>
-</section>
-
-<section class="p-6">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10" data-aos="fade-up">My Programming Languages & Tools</h2>
-
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-        <div data-aos="fade-up" data-aos-delay="100" class="text-center">
-            <ion-icon name="logo-python" class="text-6xl text-blue-500"></ion-icon>
-            <p class="mt-2 text-lg">Python</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="200" class="text-center">
-            <ion-icon name="logo-javascript" class="text-6xl text-yellow-500"></ion-icon>
-            <p class="mt-2 text-lg">JavaScript</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="300" class="text-center">
-            <ion-icon name="logo-html5" class="text-6xl text-orange-500"></ion-icon>
-            <p class="mt-2 text-lg">HTML5</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="400" class="text-center">
-            <ion-icon name="logo-css3" class="text-6xl text-blue-600"></ion-icon>
-            <p class="mt-2 text-lg">CSS3</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="500" class="text-center">
-            <ion-icon name="logo-nodejs" class="text-6xl text-green-500"></ion-icon>
-            <p class="mt-2 text-lg">Node.js</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="600" class="text-center">
-            <ion-icon name="logo-react" class="text-6xl text-blue-400"></ion-icon>
-            <p class="mt-2 text-lg">React</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="700" class="text-center">
-            <ion-icon name="logo-github" class="text-6xl text-red-500"></ion-icon>
-            <p class="mt-2 text-lg">Git</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="800" class="text-center">
-            <ion-icon name="logo-docker" class="text-6xl text-blue-500"></ion-icon>
-            <p class="mt-2 text-lg">Docker</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="900" class="text-center">
-            <ion-icon name="logo-react" class="text-6xl text-gray-800"></ion-icon>
-            <p class="mt-2 text-lg">Next.js</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="1000" class="text-center">
-            <ion-icon name="code-slash-outline" class="text-6xl text-blue-800"></ion-icon>
-            <p class="mt-2 text-lg">C Language</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="1100" class="text-center">
-            <ion-icon name="code-working-outline" class="text-6xl text-red-600"></ion-icon>
-            <p class="mt-2 text-lg">Java</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="1200" class="text-center">
-            <ion-icon name="logo-python" class="text-6xl text-green-800"></ion-icon>
-            <p class="mt-2 text-lg">Django</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="1300" class="text-center">
-            <ion-icon name="logo-tux" class="text-6xl text-black"></ion-icon>
-            <p class="mt-2 text-lg">Linux</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="1400" class="text-center">
-            <ion-icon name="server-outline" class="text-6xl text-orange-600"></ion-icon>
-            <p class="mt-2 text-lg">cPanel</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="1500" class="text-center">
-            <ion-icon name="rocket-outline" class="text-6xl text-black"></ion-icon>
-            <p class="mt-2 text-lg">Expo</p>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="1600" class="text-center">
-            <ion-icon name="logo-windows" class="text-6xl text-blue-700"></ion-icon>
-            <p class="mt-2 text-lg">Windows</p>
-        </div>
-    </div>
-</section>
-
-<div class="flex flex-col justify-center items-center h-[60vh] text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">Ready to Connect?</h2>
-    <p class="text-lg md:text-xl text-gray-700 mb-6 text-center" data-aos="fade-up" data-aos-delay="100">
-        If you're interested in collaborating, discussing ideas, or have any questions, feel free to reach out. 
-        I'm here to help you with your project needs!
-    </p>
-    <a href="contact.html" class="bg-white text-[#003B6D] px-6 py-3 rounded-full hover:bg-[#003B6D] hover:text-white transition-all transform hover:scale-105 shadow-lg" data-aos="fade-up" data-aos-delay="200">
-        Fill Out Contact Form
-    </a>
-    <div class="text-center"></div>
-        <a href="#my-projects" class="flex justify-center items-center pt-6">
-            <ion-icon name="chevron-down-circle-outline" class="text-4xl text-[#003B6D] bounce"></ion-icon>
-        </a>
-    </div>
-
-<section class="py-12" id="my-projects">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10" data-aos="fade-up">My Projects</h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
-  
-        <div class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-500 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
-            <img src="https://picsum.photos/400/300?random=30" alt="Project 8" class="w-full h-48 object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-70 flex items-center justify-center text-white">
-                <a href="https://solver.shahibu.com/" class="text-lg font-semibold hover:underline hover:text-yellow-200 transition duration-300">Word Hunt Solver</a>
+                <!-- Terminal Window -->
+                <div class="code-block rounded-lg overflow-hidden">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">about.py</div>
+                    </div>
+                    <div class="p-6 font-mono text-sm">
+                        <div class="text-green-400">$ python about.py</div>
+                        <div class="text-slate-300 mt-2">Name: Arthur Okumu</div>
+                        <div class="text-slate-300">Location: Nairobi, Kenya</div>
+                        <div class="text-slate-300">Role: Full Stack Developer</div>
+                        <div class="text-slate-300">Experience: 3+ years</div>
+                        <div class="text-green-400 mt-4">$ ls specializations/</div>
+                        <div class="text-slate-300 mt-2">
+                            web_development mobile_apps<br />
+                            penetration_testing blockchain<br />
+                            network_programming ai_solutions
+                        </div>
+                        <div class="text-green-400 mt-4">$ <span class="animate-pulse">_</span></div>
+                    </div>
+                </div>
             </div>
         </div>
-  
-        <div class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-500 hover:scale-105" data-aos="fade-up" data-aos-delay="100">
-            <img src="https://picsum.photos/400/300?random=1" alt="Project 1" class="w-full h-48 object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-70 flex items-center justify-center text-white">
-                <a href="https://a.shahibu.com/catalogue/" class="text-lg font-semibold hover:underline hover:text-yellow-200 transition duration-300">E-commerce</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-slate-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">
+                    <span class="text-green-400">//</span> About Me
+                </h2>
+                <div class="w-20 h-1 bg-green-500 mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 text-green-400">Background</h3>
+                    <p class="text-lg text-slate-300 mb-6 leading-relaxed">
+                        I'm an enthusiastic programmer and passionate lover of technology, currently based in Nairobi,
+                        Kenya.
+                        I thrive on exploring new technologies and building innovative solutions that simplify lives.
+                    </p>
+                    <p class="text-lg text-slate-300 mb-6 leading-relaxed">
+                        With a solid foundation in various programming languages and frameworks, I love to code during
+                        my free time.
+                        When I'm not programming, you might find me cycling or skating, embracing the joy of movement.
+                    </p>
+                    <p class="text-lg text-slate-300 mb-8 leading-relaxed">
+                        Creativity and curiosity are at the heart of my innovation, and I strive to embody these values
+                        in every project I undertake.
+                        I also share my thoughts and projects on my blog.
+                    </p>
+
+                    <!-- Specializations -->
+                    <h4 class="text-xl font-semibold mb-4 text-green-400">Specializations</h4>
+                    <div class="grid grid-cols-1 gap-3">
+                        <div class="code-block rounded p-4 flex items-center">
+                            <ion-icon name="code-slash" class="text-green-400 text-xl mr-3"></ion-icon>
+                            <div>
+                                <div class="font-mono text-green-400 text-sm">Web Development</div>
+                                <div class="text-slate-300 text-sm">Full-stack applications</div>
+                            </div>
+                        </div>
+                        <div class="code-block rounded p-4 flex items-center">
+                            <ion-icon name="phone-portrait" class="text-green-400 text-xl mr-3"></ion-icon>
+                            <div>
+                                <div class="font-mono text-green-400 text-sm">Mobile Applications</div>
+                                <div class="text-slate-300 text-sm">Cross-platform solutions</div>
+                            </div>
+                        </div>
+                        <div class="code-block rounded p-4 flex items-center">
+                            <ion-icon name="shield-checkmark" class="text-green-400 text-xl mr-3"></ion-icon>
+                            <div>
+                                <div class="font-mono text-green-400 text-sm">Penetration Testing</div>
+                                <div class="text-slate-300 text-sm">Web security assessment</div>
+                            </div>
+                        </div>
+                        <div class="code-block rounded p-4 flex items-center">
+                            <ion-icon name="share-social" class="text-green-400 text-xl mr-3"></ion-icon>
+                            <div>
+                                <div class="font-mono text-green-400 text-sm">Network Programming</div>
+                                <div class="text-slate-300 text-sm">Infrastructure solutions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="code-block rounded p-6 text-center">
+                            <div class="text-3xl font-bold text-green-400 mb-2" id="years-counter">3+</div>
+                            <div class="text-slate-300 font-mono text-sm">Years Experience</div>
+                        </div>
+                        <div class="code-block rounded p-6 text-center">
+                            <div class="text-3xl font-bold text-green-400 mb-2">50+</div>
+                            <div class="text-slate-300 font-mono text-sm">Projects Completed</div>
+                        </div>
+                        <div class="code-block rounded p-6 text-center">
+                            <div class="text-3xl font-bold text-green-400 mb-2">24/7</div>
+                            <div class="text-slate-300 font-mono text-sm">Learning Mode</div>
+                        </div>
+                        <div class="code-block rounded p-6 text-center">
+                            <div class="text-3xl font-bold text-green-400 mb-2">∞</div>
+                            <div class="text-slate-300 font-mono text-sm">Curiosity Level</div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Features -->
+                    <div class="space-y-4">
+                        <h4 class="text-xl font-semibold text-green-400">Professional Services</h4>
+                        <div class="grid grid-cols-1 gap-3">
+                            <div class="flex items-center p-4 code-block rounded">
+                                <ion-icon name="checkmark-circle" class="text-green-400 text-xl mr-3"></ion-icon>
+                                <span class="text-slate-300">Freelance Services</span>
+                            </div>
+                            <div class="flex items-center p-4 code-block rounded">
+                                <ion-icon name="headset" class="text-green-400 text-xl mr-3"></ion-icon>
+                                <span class="text-slate-300">Customer Support</span>
+                            </div>
+                            <div class="flex items-center p-4 code-block rounded">
+                                <ion-icon name="document-text" class="text-green-400 text-xl mr-3"></ion-icon>
+                                <span class="text-slate-300">Certified Professional</span>
+                            </div>
+                            <div class="flex items-center p-4 code-block rounded">
+                                <ion-icon name="star" class="text-green-400 text-xl mr-3"></ion-icon>
+                                <span class="text-slate-300">Quality Work</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-500 hover:scale-105" data-aos="fade-up" data-aos-delay="100">
-            <img src="https://picsum.photos/400/300?random=15" alt="Project 2" class="w-full h-48 object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-70 flex items-center justify-center text-white">
-                <a href="https://massai.shahibu.com/" class="text-lg font-semibold hover:underline hover:text-yellow-200 transition duration-300">Massai Market</a>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">
+                    <span class="text-green-400">//</span> Programming Languages & Tools
+                </h2>
+                <div class="w-20 h-1 bg-green-500 mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-python" class="text-6xl text-blue-500 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">Python</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-javascript" class="text-6xl text-yellow-500 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">JavaScript</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-html5" class="text-6xl text-orange-500 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">HTML5</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-css3" class="text-6xl text-blue-600 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">CSS3</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-nodejs" class="text-6xl text-green-500 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">Node.js</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-react" class="text-6xl text-blue-400 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">React</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-github" class="text-6xl text-slate-400 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">Git</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-docker" class="text-6xl text-blue-500 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">Docker</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-react" class="text-6xl text-gray-600 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">Next.js</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="code-slash-outline" class="text-6xl text-blue-800 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">C Language</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="code-working-outline" class="text-6xl text-red-600 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">Java</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-python" class="text-6xl text-green-800 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">Django</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-tux" class="text-6xl text-slate-100 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">Linux</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="server-outline" class="text-6xl text-orange-600 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">cPanel</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="rocket-outline" class="text-6xl text-slate-100 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">Expo</p>
+                </div>
+                <div class="text-center code-block rounded p-6 hover:scale-105 transition-transform">
+                    <ion-icon name="logo-windows" class="text-6xl text-blue-700 mb-2"></ion-icon>
+                    <p class="text-slate-300 font-mono text-sm">Windows</p>
+                </div>
             </div>
         </div>
-        
-        <div class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-500 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
-            <img src="https://picsum.photos/400/300?random=3" alt="Project 7" class="w-full h-48 object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-70 flex items-center justify-center text-white">
-                <a href="https://github.com/arthurom254/TarballFileBucket" class="text-lg font-semibold hover:underline hover:text-yellow-200 transition duration-300">Tarball File Bucket</a>
+    </section>
+
+    <section id="projects" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4" data-aos="fade-up">
+                    <span class="text-green-400">//</span> Featured Projects
+                </h2>
+                <div class="w-20 h-1 bg-green-500 mx-auto mb-6"></div>
+                <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    A collection of projects that showcase my skills in full-stack development,
+                    system design, modern DevOps practices, and innovative solutions.
+                </p>
             </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1: Word Hunt Solver -->
+                <div class="code-block rounded-lg overflow-hidden project-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">word-hunt-solver</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-300 mb-4">
+                            Advanced algorithm-based word puzzle solver with pattern recognition and optimization
+                            techniques.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span
+                                class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">JavaScript</span>
+                            <span
+                                class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Algorithms</span>
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Python</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <a href="https://solver.shahibu.com/" target="_blank"
+                                class="text-green-400 hover:text-green-300 font-mono text-sm glow-on-hover">Live Demo
+                                →</a>
+                            <a href="#" class="text-slate-400 hover:text-slate-300 font-mono text-sm">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: E-commerce Platform -->
+                <div class="code-block rounded-lg overflow-hidden project-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">e-commerce-platform</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-300 mb-4">
+                            Full-stack e-commerce solution with admin
+                            dashboard.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Node.js</span>
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">MongoDB</span>
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Stripe</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <a href="https://a.shahibu.com/catalogue/" target="_blank"
+                                class="text-green-400 hover:text-green-300 font-mono text-sm">Live Demo →</a>
+                            <a href="#" class="text-slate-400 hover:text-slate-300 font-mono text-sm">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Massai Market -->
+                <div class="code-block rounded-lg overflow-hidden project-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">massai-market</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-300 mb-4">
+                            Students marketplace platform connecting local traders with students through
+                            digital commerce.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Django</span>
+                            <span
+                                class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Tailwind</span>
+                            <span
+                                class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">PostgreSQL</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <a href="https://massai.shahibu.com/" target="_blank"
+                                class="text-green-400 hover:text-green-300 font-mono text-sm">Live Demo →</a>
+                            <a href="#" class="text-slate-400 hover:text-slate-300 font-mono text-sm">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Tarball File Bucket -->
+                <div class="code-block rounded-lg overflow-hidden project-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">tarball-file-bucket</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-300 mb-4">
+                            Efficient file compression and storage system with automated backup and retrieval
+                            capabilities.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Python</span>
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Django</span>
+                            <span
+                                class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">PostgreSQL</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <a href="#" class="text-green-400 hover:text-green-300 font-mono text-sm">Live Demo →</a>
+                            <a href="https://github.com/arthurom254/TarballFileBucket" target="_blank"
+                                class="text-slate-400 hover:text-slate-300 font-mono text-sm">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: WhatsApp Chat to PDF -->
+                <div class="code-block rounded-lg overflow-hidden project-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">whatsapp-pdf-converter</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-300 mb-4">
+                            Convert WhatsApp chat exports to beautifully formatted PDF documents with media
+                            preservation.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Django</span>
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Python</span>
+                            <span
+                                class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">PostgreSQL</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <a href="https://wa.shahibu.com/" target="_blank"
+                                class="text-green-400 hover:text-green-300 font-mono text-sm">Live Demo →</a>
+                            <a href="#" class="text-slate-400 hover:text-slate-300 font-mono text-sm">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Web Builder -->
+                <div class="code-block rounded-lg overflow-hidden project-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">web-builder</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-300 mb-4">
+                            Drag-and-drop website builder with real-time preview and responsive design capabilities.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Vue.js</span>
+                            <span
+                                class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Tailwind</span>
+                            <span
+                                class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Firebase</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <a href="https://github.com/arthurom254/web-builder"
+                                class="text-green-400 hover:text-green-300 font-mono text-sm">Live Demo →</a>
+                            <a href="https://github.com/arthurom254/web-builder" target="_blank"
+                                class="text-slate-400 hover:text-slate-300 font-mono text-sm">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 7: Hostel Management System -->
+                <div class="code-block rounded-lg overflow-hidden project-card" data-aos="fade-up" data-aos-delay="700">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">hostel-management</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-300 mb-4">
+                            Complete hostel booking and management system with payment processing and student tracking.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">PHP</span>
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">MySQL</span>
+                            <span
+                                class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Bootstrap</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <a href="https://github.com/arthurom254/HostelManagementSystem"
+                                class="text-green-400 hover:text-green-300 font-mono text-sm">Live Demo →</a>
+                            <a href="https://github.com/arthurom254/HostelManagementSystem" target="_blank"
+                                class="text-slate-400 hover:text-slate-300 font-mono text-sm">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 8: AI Virtual Assistant -->
+                <div class="code-block rounded-lg overflow-hidden project-card" data-aos="fade-up" data-aos-delay="800">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">ai-assistant</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-300 mb-4">
+                            Intelligent virtual assistant powered by machine learning with natural language processing
+                            capabilities.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Python</span>
+                            <span
+                                class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">TensorFlow</span>
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">NLP</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <a href="https://github.com/arthurom254/assistant"
+                                class="text-green-400 hover:text-green-300 font-mono text-sm">Live Demo →</a>
+                            <a href="https://github.com/arthurom254/assistant" target="_blank"
+                                class="text-slate-400 hover:text-slate-300 font-mono text-sm">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 9: All Projects Hub -->
+                <div class="code-block rounded-lg overflow-hidden project-card" data-aos="fade-up" data-aos-delay="900">
+                    <div class="bg-slate-800 px-4 py-3 flex items-center justify-between">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">all-projects</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-slate-300 mb-4">
+                            Explore my complete portfolio of open-source projects, experiments, and development
+                            contributions.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Open
+                                Source</span>
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">GitHub</span>
+                            <span class="px-2 py-1 bg-slate-700 text-green-400 text-xs font-mono rounded">Various</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <a href="https://github.com/arthurom254?tab=repositories" target="_blank"
+                                class="text-green-400 hover:text-green-300 font-mono text-sm">View All →</a>
+                            <a href="https://github.com/arthurom254" target="_blank"
+                                class="text-slate-400 hover:text-slate-300 font-mono text-sm">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
         </div>
-        
-        
-        <div class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-500 hover:scale-105" data-aos="fade-up" data-aos-delay="200">
-            <img src="https://picsum.photos/400/300?random=2" alt="Project 3" class="w-full h-48 object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-70 flex items-center justify-center text-white">
-                <a href="https://wa.shahibu.com/" class="text-lg font-semibold hover:underline hover:text-yellow-200 transition duration-300">Whatsapp Chat to PDF</a>
-            </div>
-        </div>
-        
-        <div class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-500 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
-            <img src="https://picsum.photos/400/300?random=3" alt="Project 4" class="w-full h-48 object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-70 flex items-center justify-center text-white">
-                <a href="https://github.com/arthurom254/web-builder" class="text-lg font-semibold hover:underline hover:text-yellow-200 transition duration-300">Web Builder</a>
-            </div>
-        </div>
-        
-        <div class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-500 hover:scale-105" data-aos="fade-up" data-aos-delay="400">
-            <img src="https://picsum.photos/400/300?random=4" alt="Project 5" class="w-full h-48 object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-70 flex items-center justify-center text-white">
-                <a href="https://github.com/arthurom254/HostelManagementSystem" class="text-lg font-semibold hover:underline hover:text-yellow-200 transition duration-300">Hostel Booking</a>
-            </div>
-        </div>
-        
-        <div class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-500 hover:scale-105" data-aos="fade-up" data-aos-delay="500">
-            <img src="https://picsum.photos/400/300?random=5" alt="Project 6" class="w-full h-48 object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-70 flex items-center justify-center text-white">
-                <a href="https://github.com/arthurom254/assistant" class="text-lg font-semibold hover:underline hover:text-yellow-200 transition duration-300">AI Powered Virtual Assistant</a>
-            </div>
-        </div>
-        <div class="relative overflow-hidden rounded-lg shadow-lg transform transition duration-500 hover:scale-105" data-aos="fade-up" data-aos-delay="600">
-            <img src="https://picsum.photos/400/300?random=6" alt="Project 9" class="w-full h-48 object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-70 flex items-center justify-center text-white">
-                <a href="https://github.com/arthurom254?tab=repositories" class="text-lg font-semibold hover:underline hover:text-yellow-200 transition duration-300">All Public Projects</a>
-            </div>
-        </div>        
-    </div>
+    </section>
+
     
-</section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-slate-800">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">
+                    <span class="text-green-400">//</span> Get In Touch
+                </h2>
+                <div class="w-20 h-1 bg-green-500 mx-auto mb-6"></div>
+                <p class="text-lg text-slate-400">
+                    Let's build something awesome together. Drop me a line!
+                </p>
+            </div>
 
-<section class="py-12 bg-white px-1" id="hire-me">
-    <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-6" data-aos="fade-up">Hire Me</h2>
-        <p class="text-lg md:text-xl text-gray-700 mb-4" data-aos="fade-up" data-aos-delay="100">
-            With <span id="years-of-experience"></span> years of experience as a freelancer, I provide top-notch services and exceptional customer support.
-        </p>
-        <p class="text-lg md:text-xl text-gray-700 mb-4" data-aos="fade-up" data-aos-delay="200">
-            I am a certified professional dedicated to delivering quality work tailored to your needs.
-        </p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div class="code-block rounded-lg p-8">
+                    <div class="bg-slate-800 -m-2 mb-4 p-4 rounded flex items-center justify-between">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">contact.json</div>
+                    </div>
+                    
+                    <div class="font-mono text-sm">
+                        <div class="text-slate-300">{</div>
+                        <div class="ml-4">
+                            <div class="text-green-400">"email"<span class="text-slate-300">: </span><span class="text-yellow-400">"okumuarthur69@gmail.com"</span>,</div>
+                            <div class="text-green-400">"location"<span class="text-slate-300">: </span><span class="text-yellow-400">"Nairobi KE"</span>,</div>
+                            <!-- <div class="text-green-400">"phone"<span class="text-slate-300">: </span><span class="text-yellow-400">""</span>,</div> -->
+                            <div class="text-green-400">"social"<span class="text-slate-300">: {</span></div>
+                            <div class="ml-4">
+                                <div class="text-green-400">"github"<span class="text-slate-300">: </span><span class="text-yellow-400">"github.com/arthurom254"</span>,</div>
+                                <div class="text-green-400">"linkedin"<span class="text-slate-300">: </span><span class="text-yellow-400">"linkedin.com/in/arthurom254"</span>,</div>
+                                <div class="text-green-400">"twitter"<span class="text-slate-300">: </span><span class="text-yellow-400">"@arthurom254"</span></div>
+                            </div>
+                            <div class="text-slate-300">}</div>
+                        </div>
+                        <div class="text-slate-300">}</div>
+                    </div>
+                </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-            <div class="flex items-center justify-center p-4 border rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="300">
-                <ion-icon name="checkmark-circle" class="text-4xl text-[#003B6D] mr-3"></ion-icon>
-                <span class="text-lg">Freelance Services</span>
-            </div>
-            <div class="flex items-center justify-center p-4 border rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="400">
-                <ion-icon name="headset" class="text-4xl text-[#003B6D] mr-3"></ion-icon>
-                <span class="text-lg">Customer Support</span>
-            </div>
-            <div class="flex items-center justify-center p-4 border rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="500">
-                <ion-icon name="document-text" class="text-4xl text-[#003B6D] mr-3"></ion-icon>
-                <span class="text-lg">Certified Professional</span>
-            </div>
-            <div class="flex items-center justify-center p-4 border rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="600">
-                <ion-icon name="star" class="text-4xl text-[#003B6D] mr-3"></ion-icon>
-                <span class="text-lg">Quality Work</span>
+                <!-- Contact Form -->
+                <div class="code-block rounded-lg p-8">
+                    <div class="bg-slate-800 -m-2 mb-6 p-4 rounded flex items-center justify-between">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div class="font-mono text-sm text-slate-400">send-message.js</div>
+                    </div>
+                    
+                    <form action="https://formspree.io/f/mqkowqnr" method="post" class="space-y-6">
+                        <div>
+                            <label class="block font-mono text-sm text-green-400 mb-2">const name =</label>
+                            <input type="text" name="name" placeholder="Your Name" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded text-slate-100 focus:border-green-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-mono text-sm text-green-400 mb-2">const email =</label>
+                            <input type="email" name="email" placeholder="your.email@example.com" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded text-slate-100 focus:border-green-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-mono text-sm text-green-400 mb-2">const message =</label>
+                            <textarea rows="4" name="message" placeholder="Your message here..." class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded text-slate-100 focus:border-green-500 focus:outline-none resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-3 bg-green-500 text-slate-900 font-semibold rounded glow hover:bg-green-400 transition-colors font-mono">
+                            sendMessage()
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="container mx-auto py-12 px-6">
-    <div class="text-center mt-8">
-        <a href="/blog/" class="bg-[#003B6D] text-white px-6 py-3 rounded-full hover:bg-[#6699CC] transition-all">View My Articles</a>
-    </div>
-</section>
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-8 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="font-mono text-slate-400 mb-4 md:mb-0">
+                    <span class="text-green-400">©</span> 2025  Arthur Okumu. All rights reserved.
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-slate-400 hover:text-green-400 transition-colors font-mono text-sm">GitHub</a>
+                    <a href="#" class="text-slate-400 hover:text-green-400 transition-colors font-mono text-sm">LinkedIn</a>
+                    <a href="#" class="text-slate-400 hover:text-green-400 transition-colors font-mono text-sm">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-
-<section class="py-12 bg-gray-100">
-    <div class="flex flex-col justify-center items-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">Let's Bring Your Ideas to Life!</h2>
-        <p class="text-lg md:text-xl text-gray-700 mb-6 text-center" data-aos="fade-up" data-aos-delay="100">
-            Don't hesitate to reach out! Whether you have a question, a project in mind, or just want to chat about tech, 
-            I’m all ears. Your next big idea is just a click away!
-        </p>
-        <a href="contact.html" class="bg-white text-[#003B6D] px-6 py-3 rounded-full hover:bg-[#003B6D] hover:text-white transition-all transform hover:scale-105 shadow-lg" data-aos="fade-up" data-aos-delay="200">
-            Fill Out Contact Form
-        </a>
-    </div>
-</section>
-
-
-
-<footer class="bg-gray-800 text-white py-4">
-    <div class="max-w-6xl mx-auto flex justify-center">
-        <ul class="flex space-x-6">
-            <li>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#003B6D] transition-colors">
-                    <ion-icon name="logo-facebook" class="text-2xl"></ion-icon>
-                </a>
-            </li>
-            <li>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#003B6D] transition-colors">
-                    <ion-icon name="logo-twitter" class="text-2xl"></ion-icon>
-                </a>
-            </li>
-            <li>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#003B6D] transition-colors">
-                    <ion-icon name="logo-instagram" class="text-2xl"></ion-icon>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="text-center mt-4">
-        <p class="text-sm">&copy; 2024 atomic-anaid. All rights reserved.</p>
-    </div>
-</footer>
-
-<script src="js/main.js"></script>
-<script>
-  AOS.init();
-  initYr()
-</script>
 </body>
+
 </html>
