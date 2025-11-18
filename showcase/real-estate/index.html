@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Hunt Solver - Arthur Okumu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #10B981;
+            --secondary-color: #065F46;
+            --accent-color: #34D399;
+            --background: #0F172A;
+            --surface: #1E293B;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .glow {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .code-block {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .nav-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .nav-menu.active {
+            max-height: 500px;
+        }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            border: 1px solid #334155;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
+        }
+
+        .image-placeholder {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            color: #10B981;
+            margin: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 0.5rem;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(16, 185, 129, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #10B981;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-slate-100">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-slate-900 bg-opacity-95 backdrop-blur-sm z-50 border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-mono text-xl font-bold text-green-400">
+                    <a href="index.html">Arthur Okumu</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-white focus:outline-none">
+                        <ion-icon name="menu" class="text-2xl"></ion-icon>
+                    </button>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html#home"
+                        class="text-slate-300 hover:text-green-400 transition-colors font-mono">home</a>
+                    <a href="index.html#about"
+                        class="text-slate-300 hover:text-green-400 transition-colors font-mono">about</a>
+                    <a href="index.html#projects"
+                        class="text-slate-300 hover:text-green-400 transition-colors font-mono">projects</a>
+                    <a href="index.html#contact"
+                        class="text-slate-300 hover:text-green-400 transition-colors font-mono">contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="nav-menu" class="nav-menu md:hidden bg-slate-800 shadow-md fixed top-20 w-full z-40">
+        <div class="flex flex-col items-center py-4">
+            <a href="index.html#home"
+                class="text-slate-300 hover:text-green-400 transition-colors font-mono py-2">home</a>
+            <a href="index.html#about"
+                class="text-slate-300 hover:text-green-400 transition-colors font-mono py-2">about</a>
+            <a href="index.html#projects"
+                class="text-slate-300 hover:text-green-400 transition-colors font-mono py-2">projects</a>
+            <a href="index.html#contact"
+                class="text-slate-300 hover:text-green-400 transition-colors font-mono py-2">contact</a>
+        </div>
+    </div>
+
+    <!-- Main Image -->
+    <section class="py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <img class="image-container image-placeholder" src="./img/1.png" alt="">
+        </div>
+
+    </section>
+
+
+    <section class="py-12 bg-slate-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 section-title text-green-400">Screenshots</h2>
+
+            <div class="gap-8 mb-8">
+                <div>
+                    <img class="image-container image-placeholder" src="./img/2.png" alt="">
+                    <p class="text-slate-400 text-center">Apartment Management</p>
+                </div>
+
+                <div>
+                    <img class="image-container image-placeholder" src="./img/3.png" alt="">
+
+                    <p class="text-slate-400 text-center">Utility Management</p>
+                </div>
+
+                <div>
+                    <img class="image-container image-placeholder" src="./img/4.png" alt="">
+
+                    <p class="text-slate-400 text-center">Tenant Management</p>
+                </div>
+
+                <div>
+                    <img class="image-container image-placeholder" src="./img/5.png" alt="">
+
+                    <p class="text-slate-400 text-center">Payment Management</p>
+                </div>
+                <div>
+                    <img class="image-container image-placeholder" src="./img/6.png" alt="">
+
+                    <p class="text-slate-400 text-center">Invoice Management and Printing</p>
+                </div>
+                <div>
+                    <img class="image-container image-placeholder" src="./img/7.png" alt="">
+
+                    <p class="text-slate-400 text-center">Expense Management</p>
+                </div>
+                <div>
+                    <img class="image-container image-placeholder" src="./img/8.png" alt="">
+
+                    <p class="text-slate-400 text-center">Financial Reports</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="bg-slate-900 py-8 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="font-mono text-slate-400 mb-4 md:mb-0">
+                    <span class="text-green-400">©</span> 2025 Arthur Okumu. All rights reserved.
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://github.com/arthurom254" target="_blank"
+                        class="text-slate-400 hover:text-green-400 transition-colors font-mono text-sm">GitHub</a>
+                    <a href="https://linkedin.com/in/arthurom254" target="_blank"
+                        class="text-slate-400 hover:text-green-400 transition-colors font-mono text-sm">LinkedIn</a>
+                    <a href="https://twitter.com/arthurom254" target="_blank"
+                        class="text-slate-400 hover:text-green-400 transition-colors font-mono text-sm">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Close lightbox on escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+
+</html>
