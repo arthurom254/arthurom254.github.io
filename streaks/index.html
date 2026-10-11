@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Streak Tracker</title>
+    <style>
+        :root {
+            color-scheme: light
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            border-bottom: 1px solid #e5e5e5
+        }
+
+        .tabs button {
+            margin-bottom: -1px;
+            padding: .5rem .75rem;
+            border: 0;
+            border-bottom: 2px solid transparent;
+            background: transparent;
+            color: #737373;
+            font: 500 .875rem/1.25rem ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            white-space: nowrap;
+            cursor: pointer
+        }
+
+        .tabs button:hover {
+            color: #0a0a0a
+        }
+
+        .tabs button[aria-selected="true"] {
+            color: #0a0a0a;
+            border-bottom-color: #0a0a0a
+        }
+
+        .years {
+            display: flex;
+            flex-direction: column;
+            gap: .25rem
+        }
+
+        .years button {
+            padding: .5rem .9rem;
+            border: 0;
+            border-radius: .4rem;
+            background: transparent;
+            color: #59636e;
+            text-align: left;
+            font: 500 1rem ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            cursor: pointer
+        }
+
+        .years button:hover {
+            background: #f6f8fa;
+            color: #1f2328
+        }
+
+        .years button[aria-pressed="true"] {
+            background: #0969da;
+            color: #ffffff
+        }
+
+        .tabs button:focus-visible,
+        .years button:focus-visible {
+            outline: 2px solid #a1a1a1;
+            outline-offset: 2px
+        }
+    </style>
+</head>
+
+<body>
+    <noscript>This page needs JavaScript to read your streaks from Firebase.</noscript>
+
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Streaks"></nav>
+    <table cellpadding="10">
+        <tr>
+            <td valign="top">
+                <div id="chart"></div>
+            </td>
+            <td valign="top">
+                <nav class="years" id="years" aria-label="Years"></nav>
+            </td>
+        </tr>
+    </table>
+    <p id="msg"></p>
+
+    <script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.6.2/dist/frappe-charts.min.umd.js"></script>
+    <script type="module">
+        const FIREBASE_CONFIG = {
+            apiKey: "AIzaSyCLfahPTX9WpkMAyS36M6TjA7sywV6KZU4",
+            authDomain: "cuk-library.firebaseapp.com",
+            databaseURL: "https://cuk-library-default-rtdb.firebaseio.com",
+            projectId: "cuk-library",
+            storageBucket: "cuk-library.firebasestorage.app",
+            messagingSenderId: "500040017494",
+            appId: "1:500040017494:web:d1abaa236174ca1f287df7",
+            measurementId: "G-JF48NNVW51"
+        };
+
+        const DEFAULT_UID = "29ZGuHaok5RsY3MrrdcrBbttzmm2";
+        const FIREBASE_VERSION = "12.19.0";
+
+        window.Date = new Proxy(Date, {
+            construct(target, args, newTarget) {
+                if (args.length === 1 && typeof args[0] === "string" && /^\d{4}-\d{2}-\d{2}$/.test(args[0])) {
+                    const [y, m, d] = args[0].split("-").map(Number);
+                    return new target(y, m - 1, d);
+                }
+                return Reflect.construct(target, args, newTarget);
+            },
+        });
+
+        const $ = (id) => document.getElementById(id);
+        const uid = new URLSearchParams(location.search).get("u") || DEFAULT_UID;
+
+        const pad = (n) => String(n).padStart(2, "0");
+        const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+        const parse = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+        const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+        const startOfToday = () => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); };
+        const isRealDay = (s) => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && iso(parse(s)) === s;
+
+        let fetchStreaks, fetchCounts;
+
+        async function connect() {
+            const base = `https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}`;
+            const [{ initializeApp }, { getFirestore, collection, getDocs }] = await Promise.all([
+                import(`${base}/firebase-app.js`),
+                import(`${base}/firebase-firestore.js`),
+            ]);
+            const db = getFirestore(initializeApp(FIREBASE_CONFIG));
+
+            fetchStreaks = async () => {
+                const snap = await getDocs(collection(db, "users", uid, "streaks"));
+                return snap.docs
+                    .map((d) => ({ id: d.id, name: String(d.data().name || d.id), order: Number.isFinite(d.data().order) ? d.data().order : 1e9 }))
+                    .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
+            };
+
+            fetchCounts = async (streakId) => {
+                const snap = await getDocs(collection(db, "users", uid, "streaks", streakId, "years"));
+                const counts = new Map();
+                snap.forEach((d) => {
+                    const { days, counts: map } = d.data();
+                    if (Array.isArray(days)) days.filter(isRealDay).forEach((s) => counts.set(s, Math.max(counts.get(s) || 0, 1)));
+                    if (map && typeof map === "object") {
+                        for (const [s, n] of Object.entries(map)) if (isRealDay(s) && Number.isInteger(n) && n > 0) counts.set(s, n);
+                    }
+                });
+                return counts;
+            };
+        }
+
+        const state = { streaks: [], streak: 0, year: null, counts: new Map(), chart: null };
+
+        function tab(label, selected, onClick) {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.setAttribute("role", "tab");
+            b.setAttribute("aria-selected", String(selected));
+            b.textContent = label;
+            b.addEventListener("click", onClick);
+            return b;
+        }
+
+        function yearButton(label, selected, onClick) {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.setAttribute("aria-pressed", String(selected));
+            b.textContent = label;
+            b.addEventListener("click", onClick);
+            return b;
+        }
+
+        function renderTabs() {
+            $("tabs").replaceChildren(...state.streaks.map((h, i) => tab(h.name, i === state.streak, () => selectStreak(i))));
+        }
+
+        function yearsFor(counts) {
+            const ys = new Set([startOfToday().getFullYear()]);
+            counts.forEach((_, s) => ys.add(Number(s.slice(0, 4))));
+            return [...ys].sort((a, b) => b - a);
+        }
+
+        function renderYears(years) {
+            $("years").replaceChildren(...years.map((y) => yearButton(String(y), y === state.year, () => { state.year = y; renderYears(years); renderView(); })));
+        }
+
+        function renderView() {
+            const counts = state.counts.get(state.streaks[state.streak].id);
+            const today = startOfToday();
+            const current = state.year === today.getFullYear();
+            const start = current ? addDays(today, -364) : new Date(state.year, 0, 1);
+            const end = current ? today : new Date(state.year, 11, 31);
+            const [from, to] = [iso(start), iso(end)];
+
+            const points = { "1900-01-01": Math.max(1, ...counts.values()) };
+            for (const [s, n] of counts) if (s >= from && s <= to) points[s] = n;
+
+            if (typeof frappe === "undefined") { showError("Net Error"); return; }
+            state.chart?.destroy();
+            $("chart").textContent = "";
+            state.chart = new frappe.Chart("#chart", {
+                type: "heatmap",
+                data: { dataPoints: points, start, end },
+                countLabel: "done",
+                discreteDomains: 0,
+            });
+        }
+
+        async function selectStreak(i) {
+            state.streak = i;
+            renderTabs();
+            const streak = state.streaks[i];
+            if (!state.counts.has(streak.id)) {
+                try { state.counts.set(streak.id, await fetchCounts(streak.id)); } catch (e) { showError(e); return; }
+            }
+            const years = yearsFor(state.counts.get(streak.id));
+            if (!years.includes(state.year)) state.year = years[0];
+            renderYears(years);
+            renderView();
+        }
+
+        function showError(e) {
+            $("msg").textContent = typeof e === "string" ? e
+                : e?.code === "permission-denied" ? "Firestore refused the read. Check firestore.rules is deployed and the user ID is correct."
+                    : `Couldn't load streaks: ${e?.message || e}`;
+        }
+
+        async function main() {
+            try {
+                await connect();
+                state.streaks = await fetchStreaks();
+            } catch (e) { showError(e); return; }
+            if (!state.streaks.length) {
+                $("msg").textContent = `No streaks yet. Add one under users/${uid}/streaks in Firestore and it will show up here.`;
+                return;
+            }
+            selectStreak(0);
+        }
+
+        main();
+    </script>
+</body>
+
+</html>
