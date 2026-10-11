@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Edit Streaks</title>
+    <style>
+        :root {
+            color-scheme: light
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            border-bottom: 1px solid #e5e5e5
+        }
+
+        .tabs button {
+            margin-bottom: -1px;
+            padding: .5rem .75rem;
+            border: 0;
+            border-bottom: 2px solid transparent;
+            background: transparent;
+            color: #737373;
+            font: 500 .875rem/1.25rem ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            white-space: nowrap;
+            cursor: pointer
+        }
+
+        .tabs button:hover {
+            color: #0a0a0a
+        }
+
+        .tabs button[aria-selected="true"] {
+            color: #0a0a0a;
+            border-bottom-color: #0a0a0a
+        }
+
+        .years {
+            display: flex;
+            flex-direction: column;
+            gap: .25rem
+        }
+
+        .years button {
+            padding: .5rem .9rem;
+            border: 0;
+            border-radius: .4rem;
+            background: transparent;
+            color: #59636e;
+            text-align: left;
+            font: 500 1rem ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            cursor: pointer
+        }
+
+        .years button:hover {
+            background: #f6f8fa;
+            color: #1f2328
+        }
+
+        .years button[aria-pressed="true"] {
+            background: #0969da;
+            color: #ffffff
+        }
+
+        .tabs button:focus-visible,
+        .years button:focus-visible {
+            outline: 2px solid #a1a1a1;
+            outline-offset: 2px
+        }
+
+        #chart rect[data-date] {
+            cursor: pointer
+        }
+    </style>
+</head>
+
+<body>
+    <noscript>This page needs JavaScript to sign in to Firebase.</noscript>
+
+    <form id="login" hidden>
+        <p><label>Email <input id="email" type="email" autocomplete="username" required></label></p>
+        <p><label>Password <input id="password" type="password" autocomplete="current-password" required></label></p>
+        <p><button type="submit">Sign in</button></p>
+    </form>
+
+    <div id="app" hidden>
+        <p>Signed in as <span id="who"></span> <button type="button" id="signout">Sign out</button></p>
+
+        <nav class="tabs" id="tabs" role="tablist" aria-label="Streaks"></nav>
+        <table cellpadding="10">
+            <tr>
+                <td valign="top">
+                    <div id="chart"></div>
+                </td>
+                <td valign="top">
+                    <nav class="years" id="years" aria-label="Years"></nav>
+                </td>
+            </tr>
+        </table>
+
+        <form id="setcount">
+            <input type="date" id="date" aria-label="Date">
+            <input type="number" id="count" min="0" max="9999" step="1" value="0" aria-label="Count" disabled>
+            <button type="submit" id="save" disabled>Save</button>
+            <button type="button" id="plus" disabled>+1</button>
+        </form>
+
+        <form id="add">
+            <input id="newname" maxlength="40" placeholder="New treak name" aria-label="New treak name" required>
+            <button type="submit">Add treak</button>
+        </form>
+    </div>
+    <p id="msg" role="status"></p>
+
+    <script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.6.2/dist/frappe-charts.min.umd.js"></script>
+    <script type="module">
+        const FIREBASE_CONFIG = {
+            apiKey: "AIzaSyCLfahPTX9WpkMAyS36M6TjA7sywV6KZU4",
+            authDomain: "cuk-library.firebaseapp.com",
+            databaseURL: "https://cuk-library-default-rtdb.firebaseio.com",
+            projectId: "cuk-library",
+            storageBucket: "cuk-library.firebasestorage.app",
+            messagingSenderId: "500040017494",
+            appId: "1:500040017494:web:d1abaa236174ca1f287df7",
+            measurementId: "G-JF48NNVW51"
+        };
+        const FIREBASE_VERSION = "12.19.0";
+
+
+        window.Date = new Proxy(Date, {
+            construct(target, args, newTarget) {
+                if (args.length === 1 && typeof args[0] === "string" && /^\d{4}-\d{2}-\d{2}$/.test(args[0])) {
+                    const [y, m, d] = args[0].split("-").map(Number);
+                    return new target(y, m - 1, d);
+                }
+                return Reflect.construct(target, args, newTarget);
+            },
+        });
+
+        const $ = (id) => document.getElementById(id);
+
+        const pad = (n) => String(n).padStart(2, "0");
+        const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+        const parse = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+        const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+        const startOfToday = () => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); };
+        const isRealDay = (s) => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && iso(parse(s)) === s;
+
+        const showMsg = (text) => { $("msg").textContent = text; };
+
+        function errorText(e) {
+            switch (e?.code) {
+                case "auth/invalid-credential":
+                case "auth/wrong-password":
+                case "auth/user-not-found": return "Wrong email or password.";
+                case "auth/invalid-email": return "Enter a valid email address.";
+                case "auth/too-many-requests": return "Too many attempts. Wait a few minutes and try again.";
+                case "auth/network-request-failed": return "Network error. Check your connection and try again.";
+                case "permission-denied": return "Permission denied.";
+                default: return `Something went wrong: ${e?.message || e}`;
+            }
+        }
+
+        async function main() {
+            const base = `https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}`;
+            let fb;
+            try {
+                const [app, auth, fs] = await Promise.all([
+                    import(`${base}/firebase-app.js`),
+                    import(`${base}/firebase-auth.js`),
+                    import(`${base}/firebase-firestore.js`),
+                ]);
+                fb = { ...app, ...auth, ...fs };
+            } catch (e) { showMsg(errorText(e)); return; }
+            const { initializeApp, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut,
+                getFirestore, collection, doc, getDocs, addDoc, setDoc, arrayRemove, deleteField } = fb;
+            const firebaseApp = initializeApp(FIREBASE_CONFIG);
+            const auth = getAuth(firebaseApp);
+            const db = getFirestore(firebaseApp);
+
+
+            const state = { user: null, streaks: [], treak: 0, year: null, counts: new Map(), legacy: new Map(), chart: null };
+            const streaksRef = () => collection(db, "users", state.user.uid, "streaks");
+
+            $("login").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                showMsg("");
+                try {
+                    await signInWithEmailAndPassword(auth, $("email").value.trim(), $("password").value);
+                    $("password").value = "";
+                } catch (err) { showMsg(errorText(err)); }
+            });
+            $("signout").addEventListener("click", () => signOut(auth));
+
+            onAuthStateChanged(auth, async (user) => {
+                if (user && !user.providerData.some((p) => p.providerId === "password")) {
+                    await signOut(auth);
+                    showMsg("Only email and password sign-in is allowed.");
+                    return;
+                }
+                state.user = user;
+                $("login").hidden = !!user;
+                $("app").hidden = !user;
+                if (!user) {
+                    state.streaks = []; state.counts.clear(); state.legacy.clear();
+                    state.chart?.destroy(); state.chart = null;
+                    $("chart").textContent = "";
+                    return;
+                }
+                $("who").textContent = `${user.email} (user ID ${user.uid})`;
+                $("date").max = iso(startOfToday());
+                $("date").value = iso(startOfToday());
+                try { await loadStreaks(); } catch (e) { showMsg(errorText(e)); }
+            });
+
+            async function loadStreaks(selectId) {
+                const snap = await getDocs(streaksRef());
+                state.streaks = snap.docs
+                    .map((d) => ({ id: d.id, name: String(d.data().name || d.id), order: Number.isFinite(d.data().order) ? d.data().order : 1e9 }))
+                    .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
+                if (!state.streaks.length) {
+                    renderTabs();
+                    $("years").replaceChildren();
+                    state.chart?.destroy(); state.chart = null;
+                    $("chart").textContent = "";
+                    syncCount();
+                    showMsg("No streaks yet. Add one below.");
+                    return;
+                }
+                await selectStreak(Math.max(0, state.streaks.findIndex((h) => h.id === selectId)));
+            }
+
+            function button(label, attr, selected, onClick) {
+                const b = document.createElement("button");
+                b.type = "button";
+                if (attr === "tab") b.setAttribute("role", "tab");
+                b.setAttribute(attr === "tab" ? "aria-selected" : "aria-pressed", String(selected));
+                b.textContent = label;
+                b.addEventListener("click", onClick);
+                return b;
+            }
+
+            function renderTabs() {
+                $("tabs").replaceChildren(...state.streaks.map((h, i) => button(h.name, "tab", i === state.treak, () => selectStreak(i))));
+            }
+
+            function yearsFor(counts) {
+                const ys = new Set([startOfToday().getFullYear()]);
+                counts.forEach((_, s) => ys.add(Number(s.slice(0, 4))));
+                return [...ys].sort((a, b) => b - a);
+            }
+
+            function renderYears(years) {
+                $("years").replaceChildren(...years.map((y) => button(String(y), "year", y === state.year, () => { state.year = y; renderYears(years); renderView(); })));
+            }
+
+            function renderView() {
+                const counts = state.counts.get(state.streaks[state.treak].id);
+                const today = startOfToday();
+                const current = state.year === today.getFullYear();
+                const start = current ? addDays(today, -364) : new Date(state.year, 0, 1);
+                const end = current ? today : new Date(state.year, 11, 31);
+                const [from, to] = [iso(start), iso(end)];
+
+                const points = { "1900-01-01": Math.max(1, ...counts.values()) };
+                for (const [s, n] of counts) if (s >= from && s <= to) points[s] = n;
+
+                if (typeof frappe === "undefined") { showMsg("Net error."); return; }
+                state.chart?.destroy();
+                $("chart").textContent = "";
+                state.chart = new frappe.Chart("#chart", {
+                    type: "heatmap",
+                    data: { dataPoints: points, start, end },
+                    countLabel: "done",
+                    discreteDomains: 0,
+                });
+                markSelected();
+            }
+
+            async function selectStreak(i) {
+                state.treak = i;
+                renderTabs();
+                const treak = state.streaks[i];
+                if (!state.counts.has(treak.id)) {
+                    try {
+                        const snap = await getDocs(collection(db, "users", state.user.uid, "streaks", treak.id, "years"));
+                        const counts = new Map(), legacy = new Set();
+                        snap.forEach((d) => {
+                            const { days, counts: map } = d.data();
+                            if (Array.isArray(days)) days.filter(isRealDay).forEach((s) => { legacy.add(s); counts.set(s, Math.max(counts.get(s) || 0, 1)); });
+                            if (map && typeof map === "object") {
+                                for (const [s, n] of Object.entries(map)) if (isRealDay(s) && Number.isInteger(n) && n > 0) counts.set(s, n);
+                            }
+                        });
+                        state.counts.set(treak.id, counts);
+                        state.legacy.set(treak.id, legacy);
+                    } catch (e) { showMsg(errorText(e)); return; }
+                }
+                refresh();
+            }
+
+            function refresh() {
+                const years = yearsFor(state.counts.get(state.streaks[state.treak].id));
+                if (!years.includes(state.year)) state.year = years[0];
+                renderYears(years);
+                renderView();
+                syncCount();
+            }
+
+            const selectedStyle = document.head.appendChild(document.createElement("style"));
+            function markSelected() {
+                const s = $("date").value;
+                selectedStyle.textContent = isRealDay(s) ? `#chart rect[data-date="${s}"]{stroke:#0a0a0a;stroke-width:2px}` : "";
+            }
+
+            const currentCount = () => state.counts.get(state.streaks[state.treak]?.id)?.get($("date").value) || 0;
+            const validCount = () => /^\d{1,4}$/.test($("count").value);
+
+            function updateButtons() {
+                const s = $("date").value;
+                const dayOk = !!state.streaks[state.treak] && isRealDay(s) && s <= iso(startOfToday());
+                $("count").disabled = !dayOk;
+                $("save").disabled = !dayOk || !validCount();
+                $("plus").disabled = !dayOk || currentCount() >= 9999;
+            }
+
+            function syncCount() {
+                $("count").value = String(currentCount());
+                updateButtons();
+            }
+
+            $("chart").addEventListener("click", (e) => {
+                const r = e.target.closest?.("rect[data-date]");
+                if (!r) return;
+                $("date").value = r.getAttribute("data-date");
+                syncCount(); markSelected();
+            });
+            $("date").addEventListener("input", () => { syncCount(); markSelected(); });
+            $("count").addEventListener("input", updateButtons);
+
+            async function saveCount(n) {
+                const treak = state.streaks[state.treak], s = $("date").value;
+                const counts = treak && state.counts.get(treak.id), legacy = treak && state.legacy.get(treak.id);
+                if (!counts || !isRealDay(s)) return;
+                if ((counts.get(s) || 0) === n) { showMsg("No change."); return; }
+                $("count").disabled = $("save").disabled = $("plus").disabled = true;
+                showMsg("Saving…");
+                const data = { counts: { [s]: n > 0 ? n : deleteField() } };
+                if (legacy.has(s)) data.days = arrayRemove(s);
+                try {
+                    await setDoc(doc(db, "users", state.user.uid, "streaks", treak.id, "years", s.slice(0, 4)), data, { merge: true });
+                    if (n > 0) counts.set(s, n); else counts.delete(s);
+                    legacy.delete(s);
+                    showMsg(n > 0 ? `Saved ${s}: ${n}.` : `Cleared ${s}.`);
+                    refresh();
+                } catch (e) { showMsg(errorText(e)); updateButtons(); }
+            }
+
+            $("setcount").addEventListener("submit", (e) => { e.preventDefault(); if (validCount()) saveCount(Number($("count").value)); });
+            $("plus").addEventListener("click", () => saveCount(currentCount() + 1));
+
+            $("add").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const name = $("newname").value.trim();
+                if (!name) return;
+                const order = state.streaks.length ? Math.max(...state.streaks.map((h) => (h.order === 1e9 ? -1 : h.order))) + 1 : 0;
+                try {
+                    const ref = await addDoc(streaksRef(), { name, order });
+                    $("newname").value = "";
+                    await loadStreaks(ref.id);
+                    showMsg(`Added ${name}.`);
+                } catch (err) { showMsg(errorText(err)); }
+            });
+        }
+
+        main();
+    </script>
+</body>
+
+</html>
