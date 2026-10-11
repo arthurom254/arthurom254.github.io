@@ -1,0 +1,44 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function canRead(uid) {
+      return true;
+    }
+
+    function isOwner(uid) {
+      return request.auth != null
+        && request.auth.uid == uid
+        && request.auth.token.firebase.sign_in_provider == 'password';
+    }
+
+    match /users/{uid}/streaks/{streakId} {
+      allow read: if canRead(uid);
+
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasAll(['name'])
+        && request.resource.data.keys().hasOnly(['name', 'order'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 40
+        && (!('order' in request.resource.data) || request.resource.data.order is int);
+
+      allow delete: if isOwner(uid);
+
+      match /years/{year} {
+        allow read: if canRead(uid);
+
+        allow create, update: if isOwner(uid)
+          && year.matches('^[0-9]{4}$')
+          && request.resource.data.keys().hasOnly(['counts', 'days'])
+          && (!('counts' in request.resource.data)
+              || (request.resource.data.counts is map && request.resource.data.counts.size() <= 366))
+          && (!('days' in request.resource.data)
+              || (request.resource.data.days is list && request.resource.data.days.size() <= 366));
+
+        allow delete: if isOwner(uid);
+      }
+    }
+  }
+}
