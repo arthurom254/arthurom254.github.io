@@ -76,16 +76,18 @@
     <noscript>This page needs JavaScript to read your streaks from Firebase.</noscript>
 
     <nav class="tabs" id="tabs" role="tablist" aria-label="Streaks"></nav>
-    <table cellpadding="10">
-        <tr>
-            <td valign="top">
-                <div id="chart"></div>
-            </td>
-            <td valign="top">
-                <nav class="years" id="years" aria-label="Years"></nav>
-            </td>
-        </tr>
-    </table>
+    <div style="width: 100vw; overflow-x: auto; overflow-y:hidden ;">
+        <table cellpadding="10">
+            <tr>
+                <td valign="top">
+                    <div id="chart"></div>
+                </td>
+                <td valign="top">
+                    <nav class="years" id="years" aria-label="Years"></nav>
+                </td>
+            </tr>
+        </table>
+    </div>
     <p id="msg"></p>
 
     <script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.6.2/dist/frappe-charts.min.umd.js"></script>

@@ -73,6 +73,34 @@
         #chart rect[data-date] {
             cursor: pointer
         }
+
+        .btn{
+            border:0;
+            padding: 5px 10px;
+            border-radius: 2px;
+
+        }
+
+        .btn:hover, .btn:active{
+            opacity: 50%;
+        }
+
+        .signed_in_user{
+            color: #1f2328;
+            font-family: monospace;
+        }
+
+        .m-2{
+            margin: 10px;
+        }
+        .form-control{
+            padding: 3px 10px;
+            border: 1px solid #a1a1a1;
+        }
+        .form-control:active{
+            border-color: #59636e;
+        }
+
     </style>
 </head>
 
@@ -80,36 +108,39 @@
     <noscript>This page needs JavaScript to sign in to Firebase.</noscript>
 
     <form id="login" hidden>
-        <p><label>Email <input id="email" type="email" autocomplete="username" required></label></p>
-        <p><label>Password <input id="password" type="password" autocomplete="current-password" required></label></p>
-        <p><button type="submit">Sign in</button></p>
+        <p><label>Email <br> <input class="form-control" id="email" type="email" autocomplete="username" required></label></p>
+        <p><label>Password <br> <input class="form-control" id="password" type="password" autocomplete="current-password" required></label></p>
+        <p><button class="btn" type="submit">Sign in</button></p>
     </form>
 
     <div id="app" hidden>
-        <p>Signed in as <span id="who"></span> <button type="button" id="signout">Sign out</button></p>
+        <p class="signed_in_user">Signed in as <span id="who"></span> </p>
+        <button class="btn" type="button" id="signout">Sign out</button>
 
-        <nav class="tabs" id="tabs" role="tablist" aria-label="Streaks"></nav>
-        <table cellpadding="10">
-            <tr>
-                <td valign="top">
-                    <div id="chart"></div>
-                </td>
-                <td valign="top">
-                    <nav class="years" id="years" aria-label="Years"></nav>
-                </td>
-            </tr>
-        </table>
+        <nav style="overflow-y: hidden;" class="tabs" id="tabs" role="tablist" aria-label="Streaks"></nav>
+        <div style="width: 100vw; overflow-x: auto; overflow-y: hidden;">
+            <table cellpadding="10" class="w-">
+                <tr>
+                    <td valign="top">
+                        <div id="chart"></div>
+                    </td>
+                    <td valign="top">
+                        <nav class="years" id="years" aria-label="Years"></nav>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-        <form id="setcount">
-            <input type="date" id="date" aria-label="Date">
-            <input type="number" id="count" min="0" max="9999" step="1" value="0" aria-label="Count" disabled>
-            <button type="submit" id="save" disabled>Save</button>
-            <button type="button" id="plus" disabled>+1</button>
+        <form id="setcount" class="m-2">
+            <input type="date" class="form-control" id="date" aria-label="Date">
+            <input type="number" class="form-control" id="count" min="0" max="9999" step="1" value="0" aria-label="Count" disabled>
+            <button class="btn" type="submit" id="save" disabled>Save</button>
+            <button class="btn" type="button" id="plus" disabled>+1</button>
         </form>
 
-        <form id="add">
-            <input id="newname" maxlength="40" placeholder="New treak name" aria-label="New treak name" required>
-            <button type="submit">Add treak</button>
+        <form id="add" class="m-2">
+            <input class="form-control" id="newname" maxlength="40" placeholder="New treak name" aria-label="New treak name" required>
+            <button class="btn" type="submit">Add treak</button>
         </form>
     </div>
     <p id="msg" role="status"></p>
