@@ -1,103 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Arthur Okumu</title>
-<style>
-  body {
-    margin: 0;
-    max-height: 70vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 40px;
-    padding: 40px 8vw;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    color: #222;
-    background: #fff;
-  }
-  
-  .text { max-width: 380px; }
-  
-  h1 { font-size: 48px; font-weight: 500; letter-spacing: -1px; margin: 0 0 24px; }
-  h1 .b { color: #4285f4; }
-  h1 .r { color: #ea4335; }
-  h1 .y { color: #fbbc05; }
-  h1 .g { color: #34a853; }
-  p { margin: 0 0 22px; }
-  b { color: #000; }
-  p { margin: 0 0 22px; }
-  b { color: #000; }
-  .grey { color: #777; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Okumu Arthur</title>
+    <style>
+        body {
+            margin: 0;
+            max-height: 60vh;
+            height: 100vh;
+            /* margin-top: -20vh; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding: 40px 8vw;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            color: #222;
+            background: #fff;
+        }
 
-  svg { width: 340px; max-width: 100%; height: auto; }
-  svg * {
-    fill: none;
-    stroke: #3b82f6;
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  svg text {
-    fill: #3b82f6;
-    stroke: none;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: 13px;
-  }
-  .steam { animation: float 2.4s ease-in-out infinite; }
-  .steam.two { animation-delay: 1.2s; }
-  .bug { animation: wobble 1.2s ease-in-out infinite; transform-origin: 60px 195px; }
-  .laptop { animation: shake 3s ease-in-out infinite; transform-origin: 130px 150px; }
-  @keyframes float { 0%,100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(-6px); opacity: .4; } }
-  @keyframes wobble { 0%,100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
-  @keyframes shake { 0%,90%,100% { transform: rotate(0); } 93% { transform: rotate(-2deg); } 96% { transform: rotate(2deg); } }
-</style>
+        .text {
+            max-width: 380px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin: 0 0 24px;
+        }
+
+        h1 .b {
+            color: #000000b2;
+        }
+
+        h1 .r {
+            color: #ea4335;
+        }
+
+        h1 .g {
+            color: #34a853;
+        }
+
+        h1 .y {
+            color: #FFFFFF;
+            -webkit-text-stroke: 1px#000000b2;
+        }
+
+        p {
+            margin: 0 0 22px;
+        }
+
+        b {
+            color: #0000005d;
+        }
+
+        b a {
+            color: #000;
+        }
+
+        p {
+            margin: 0 0 22px;
+        }
+
+        
+
+        .grey {
+            color: #777;
+        }
+
+        svg {
+            width: 340px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        svg * {
+            fill: none;
+            stroke: #3b82f6;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        svg text {
+            fill: #3b82f6;
+            stroke: none;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            font-size: 13px;
+        }
+
+        .steam {
+            animation: float 2.4s ease-in-out infinite;
+        }
+
+        .steam.two {
+            animation-delay: 1.2s;
+        }
+
+        .bug {
+            animation: wobble 1.2s ease-in-out infinite;
+            transform-origin: 60px 195px;
+        }
+
+        .laptop {
+            animation: shake 3s ease-in-out infinite;
+            transform-origin: 130px 150px;
+        }
+
+        .project-link {
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .project-link:hover .laptop {
+            opacity: 0.65;
+            transition: opacity 0.2s ease;
+        }
+
+        .project-link:focus-visible .laptop {
+            filter: drop-shadow(0 0 4px #3b82f6);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-6px);
+                opacity: .4;
+            }
+        }
+
+        @keyframes wobble {
+
+            0%,
+            100% {
+                transform: rotate(-6deg);
+            }
+
+            50% {
+                transform: rotate(6deg);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            90%,
+            100% {
+                transform: rotate(0);
+            }
+
+            93% {
+                transform: rotate(-2deg);
+            }
+
+            96% {
+                transform: rotate(2deg);
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="text">
-    <h1><span class="b">A</span><span class="r">r</span><span class="y">t</span><span class="b">h</span><span class="g">u</span><span class="r">r</span> <span class="b">O</span><span class="r">k</span><span class="y">u</span><span class="b">m</span><span class="g">u</span></h1>
-    <p><b>Developer.</b> <span class="grey">That's what we found on LinkedIn.</span></p>
-    <p class="grey">That's all we know.</p>
-  </div>
+    <div class="text">
+        <h1><span class="b">O</span><span class="r">k</span><span
+                class="y">u</span><span class="b">m</span><span class="g">u</span> <span class="b">A</span><span class="r">r</span><span class="y">t</span><span class="b">h</span><span
+                class="g">u</span><span class="r">r</span></h1>
+        <p><span class="grey"><b><a target="_blank"
+                        href="https://en.wikipedia.org/wiki/Software_development">Developer</a> </b>↗ As Labeled by
+                <b><a target="_blank" href="https://www.linkedin.com/in/arthur-okumu-a9ba63388/">LinkedIn</a></b>↗ </span></p>
+        <p class="grey">That's all we know.</p>
+    </div>
 
-  <svg viewBox="0 0 340 240" role="img" aria-label="A confused laptop, a coffee cup and a bug">
-    <g class="laptop">
-      <rect x="60" y="30" width="140" height="100" rx="8"/>
-      <rect x="70" y="40" width="120" height="80" rx="4"/>
-      <circle cx="105" cy="72" r="9"/>
-      <circle cx="108" cy="74" r="2.5"/>
-      <path d="M142 64 l16 16 M158 64 l-16 16"/>
-      <path d="M105 102 q8 -10 16 0 t16 0 t16 0"/>
-      <path d="M40 130 L220 130 L238 150 L22 150 Z"/>
-      <path d="M110 140 h40"/>
-      <path d="M238 144 q30 8 20 30 q-8 16 -30 14"/>
-    </g>
+    <svg viewBox="0 0 340 240" role="img" aria-label="A confused laptop, a coffee cup and a bug">
+        <a class="project-link" href="https://github.com/arthurom254" target="_blank" rel="noopener noreferrer"
+            aria-label="Explore my projects">
+            <g class="laptop">
+                <rect x="60" y="30" width="140" height="100" rx="8" />
+                <rect x="70" y="40" width="120" height="80" rx="4" />
+                <circle cx="105" cy="72" r="9" />
+                <circle cx="108" cy="74" r="2.5" />
+                <path d="M142 64 l16 16 M158 64 l-16 16" />
+                <path d="M105 102 q8 -10 16 0 t16 0 t16 0" />
+                <path d="M40 130 L220 130 L238 150 L22 150 Z" />
+                <path d="M110 140 h40" />
+                <path d="M238 144 q30 8 20 30 q-8 16 -30 14" />
+            </g>
 
-    <path d="M262 150 h42 v32 q0 18 -21 18 q-21 0 -21 -18 z"/>
-    <path d="M304 158 q16 0 16 13 q0 12 -16 12"/>
-    <path class="steam" d="M274 140 q-6 -8 0 -16 q6 -8 0 -16"/>
-    <path class="steam two" d="M292 140 q-6 -8 0 -16 q6 -8 0 -16"/>
+            <path d="M262 150 h42 v32 q0 18 -21 18 q-21 0 -21 -18 z" />
+            <path d="M304 158 q16 0 16 13 q0 12 -16 12" />
+            <path class="steam" d="M274 140 q-6 -8 0 -16 q6 -8 0 -16" />
+            <path class="steam two" d="M292 140 q-6 -8 0 -16 q6 -8 0 -16" />
 
-    <g class="bug">
-      <ellipse cx="60" cy="195" rx="16" ry="11"/>
-      <circle cx="42" cy="195" r="6"/>
-      <path d="M38 190 l-8 -8 M46 189 l4 -9"/>
-      <path d="M52 205 l-6 10 M60 207 v11 M68 205 l6 10"/>
-      <path d="M52 186 l-6 -8 M68 186 l6 -8"/>
-      <path d="M60 184 v22"/>
-    </g>
-    <text x="80" y="228">in production</text>
+            <g class="bug">
+                <ellipse cx="60" cy="195" rx="16" ry="11" />
+                <circle cx="42" cy="195" r="6" />
+                <path d="M38 190 l-8 -8 M46 189 l4 -9" />
+                <path d="M52 205 l-6 10 M60 207 v11 M68 205 l6 10" />
+                <path d="M52 186 l-6 -8 M68 186 l6 -8" />
+                <path d="M60 184 v22" />
+            </g>
+            <text x="80" y="228">in production</text>
 
-    <text x="205" y="30" style="font-size:22px">{ }</text>
-    <text x="30" y="60" style="font-size:18px">&lt;/&gt;</text>
-    <circle cx="170" cy="205" r="7"/>
-    <path d="M165 200 l10 10"/>
-    <text x="162" y="228">no idea</text>
-    <text x="250" y="226">cup #7</text>
-  </svg>
+            <text x="205" y="30" style="font-size:22px">{ }</text>
+            <text x="30" y="60" style="font-size:18px">&lt;/&gt;</text>
+            <circle cx="170" cy="205" r="7" />
+            <path d="M165 200 l10 10" />
+            <text x="162" y="228">no idea</text>
+            <text x="250" y="226">cup #7</text>
+        </a>
+    </svg>
 </body>
+
 </html>
